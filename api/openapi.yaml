@@ -1,0 +1,489 @@
+openapi: 3.0.1
+info:
+  contact:
+    email: techops@obada.io
+    name: Obada Dev Team
+    url: https://www.obada.io
+  termsOfService: https://www.obada.io/terms/
+  title: OBADA Client Helper API
+  version: 0.0.1
+servers:
+- url: /
+tags:
+- name: Obit
+paths:
+  /obit/generate:
+    get:
+      description: Returns the Obit Definition for a given device_id, part_number
+        and serial_number input.
+      operationId: generateObitDef
+      parameters:
+      - description: Device Id (Required)
+        explode: true
+        in: query
+        name: manufacturer
+        required: true
+        schema:
+          example: Apple
+          type: string
+        style: form
+      - description: Part Number (Required)
+        explode: true
+        in: query
+        name: part_number
+        required: true
+        schema:
+          example: "123456789"
+          type: string
+        style: form
+      - description: Serial Number (Required)
+        explode: true
+        in: query
+        name: serial_number
+        required: true
+        schema:
+          example: "123456789"
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObitDefinitionResponse'
+          description: Returns the Obit Definition
+      summary: Generate Obit Definition
+      tags:
+      - Obit
+  /client/obit/{obit_did}:
+    get:
+      operationId: getClientObit
+      parameters:
+      - description: Required.
+        explode: false
+        in: path
+        name: obit_did
+        required: true
+        schema:
+          example: did:obada:81413bc1ad2074a6ae35d1f65f64f1bca2e8a20959f37ef0349a729ddc567d9b
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientObitResponse'
+          description: Returns the obit saved on the client
+      summary: Get Client Obit
+      tags:
+      - Obit
+  /client/obit:
+    post:
+      operationId: saveClientObit
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocalObit'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientObitResponse'
+          description: Returns the obit that was saved
+      summary: Save Client Obit
+      tags:
+      - Obit
+  /server/obit/{obit_did}:
+    get:
+      description: Retrieves Obit information from blockchain but does not download
+        it.
+      operationId: fetchObitFromChain
+      parameters:
+      - description: Required.
+        explode: false
+        in: path
+        name: obit_did
+        required: true
+        schema:
+          example: did:obada:81413bc1ad2074a6ae35d1f65f64f1bca2e8a20959f37ef0349a729ddc567d9b
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlockChainObitResponse'
+          description: Array with ObitDID and USN Information
+      summary: Get Obit From Blockchain
+      tags:
+      - Obit
+  /server/obit/upload:
+    post:
+      description: Uploads Obit from client to the Blockchain
+      operationId: uploadObit
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ObitDid'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse'
+          description: Returns a status of the operation
+      summary: Upload Obit to Blockchain
+      tags:
+      - Obit
+  /server/obit/download:
+    post:
+      description: Downloads the Obit information from the blockchain to the client.
+      operationId: downloadObitFromChain
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ObitDid'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientObitResponse'
+          description: Returns the client obit downloaded from blockchain
+      summary: Download Obit from Blockchain
+      tags:
+      - Obit
+components:
+  schemas:
+    ObitDid:
+      example:
+        obit_did: did:obada:fe096095-e0f0-4918-9607-6567bd5756b5
+      properties:
+        obit_did:
+          description: OBADA decentralized identifier (max length Rohi?)
+          example: did:obada:fe096095-e0f0-4918-9607-6567bd5756b5
+          maxLength: 256
+          type: string
+      required:
+      - obit_did
+    LocalObit:
+      example:
+        owner: Tradeloop
+        metadata:
+        - value: Dell R740
+          key: model
+        - value: Dell R740
+          key: model
+        documents:
+        - name: Link to device wipe report
+          hashlink: Link to device wipe report
+        - name: Link to device wipe report
+          hashlink: Link to device wipe report
+        part_number: MWCN2LL/A
+        structured_data:
+        - value: '{"somekey":"somevalue"}'
+          key: model
+        - value: '{"somekey":"somevalue"}'
+          key: model
+        serial_number_hash: f6fc84c9f21c24907d6bee6eec38cabab5fa9a7be8c4a7827fe9e56f245bd2d5
+        modified_at: 2020-01-01T13:24:35Z
+        obit_status: FUNCTIONAL
+        manufacturer: Sony
+      properties:
+        owner:
+          description: Owner is the person/entity that owns the obit and the physical
+            asset it represents.
+          example: Tradeloop
+          type: string
+        obit_status:
+          description: |
+            Represent available Obit statuses:
+              - FUNCTIONAL
+              - NON_FUNCTIONAL
+              - DISPOSED
+              - STOLEN
+              - DISABLED_BY_OWNER
+          enum:
+          - FUNCTIONAL
+          - NON_FUNCTIONAL
+          - DISPOSED
+          - STOLEN
+          - DISABLED_BY_OWNER
+          type: string
+        manufacturer:
+          description: Waiting more specific details from Rohi
+          example: Sony
+          type: string
+        part_number:
+          description: Manufacturer provided. In cases where no part number is provided
+            for the product, use model, or the most specific ID available from the
+            manufacturer. MWCN2LL/A (an iPhone 11 Pro, Silver, 256GB, model A2160)
+          example: MWCN2LL/A
+          type: string
+        serial_number_hash:
+          description: Serial number hashed with sha256 hash function
+          example: f6fc84c9f21c24907d6bee6eec38cabab5fa9a7be8c4a7827fe9e56f245bd2d5
+          type: string
+        metadata:
+          description: Get description from Rohi
+          items:
+            $ref: '#/components/schemas/LocalObit_metadata'
+          type: array
+        documents:
+          description: |
+            To generate this link, take an SHA-256 hash of the document, and link to it as https://www.some-website.com?h1=hash-of-document. Note this does not yet adhere to the hashlink standard.
+          items:
+            $ref: '#/components/schemas/LocalObit_documents'
+          type: array
+        structured_data:
+          description: Same as metadata but bigger. Key (string) => Value (string)
+            (hash per line sha256(key + value))
+          items:
+            $ref: '#/components/schemas/LocalObit_structured_data'
+          type: array
+        modified_at:
+          example: 2020-01-01T13:24:35Z
+          format: date-time
+          type: string
+      required:
+      - manufacturer
+      - modified_at
+      - obit_status
+      - owner
+      - part_number
+      - serial_number_hash
+    BaseResponse:
+      example:
+        status: 0
+      properties:
+        status:
+          type: integer
+      type: object
+    BlockChainObitResponse:
+      example:
+        blockchain_obit:
+          root_hash: root_hash
+          obit_did: obit_did
+        status: 0
+      properties:
+        status:
+          type: integer
+        blockchain_obit:
+          $ref: '#/components/schemas/BlockChainObit'
+      type: object
+    BlockChainObit:
+      example:
+        root_hash: root_hash
+        obit_did: obit_did
+      properties:
+        root_hash:
+          type: string
+        obit_did:
+          type: string
+      type: object
+    ObitDefinitionResponse:
+      example:
+        obit:
+          usn: usn
+          usn_base58: usn_base58
+          serial_hash: serial_hash
+          obit_did: obit_did
+        status: 0
+      properties:
+        status:
+          type: integer
+        obit:
+          $ref: '#/components/schemas/ObitDefinition'
+      type: object
+    ObitDefinition:
+      example:
+        usn: usn
+        usn_base58: usn_base58
+        serial_hash: serial_hash
+        obit_did: obit_did
+      properties:
+        serial_hash:
+          type: string
+        usn:
+          type: string
+        obit_did:
+          type: string
+        usn_base58:
+          type: string
+      type: object
+    ClientObitResponse:
+      example:
+        obit:
+          owner_did: owner_did
+          metadata:
+          - value: Dell R740
+            key: model
+          - value: Dell R740
+            key: model
+          documents:
+          - name: Link to device wipe report
+            hashlink: Link to device wipe report
+          - name: Link to device wipe report
+            hashlink: Link to device wipe report
+          root_hash: root_hash
+          serial_number_hash: serial_number_hash
+          obit_status: FUNCTIONAL
+          manufacturer: manufacturer
+          usn: usn
+          part_number: part_number
+          structured_data:
+          - value: '{"somekey":"somevalue"}'
+            key: model
+          - value: '{"somekey":"somevalue"}'
+            key: model
+          id: 6
+          modified_at: 2020-01-01T13:24:35Z
+          obit_did: obit_did
+        status: 0
+      properties:
+        status:
+          type: integer
+        obit:
+          $ref: '#/components/schemas/ClientObit'
+      type: object
+    ClientObit:
+      example:
+        owner_did: owner_did
+        metadata:
+        - value: Dell R740
+          key: model
+        - value: Dell R740
+          key: model
+        documents:
+        - name: Link to device wipe report
+          hashlink: Link to device wipe report
+        - name: Link to device wipe report
+          hashlink: Link to device wipe report
+        root_hash: root_hash
+        serial_number_hash: serial_number_hash
+        obit_status: FUNCTIONAL
+        manufacturer: manufacturer
+        usn: usn
+        part_number: part_number
+        structured_data:
+        - value: '{"somekey":"somevalue"}'
+          key: model
+        - value: '{"somekey":"somevalue"}'
+          key: model
+        id: 6
+        modified_at: 2020-01-01T13:24:35Z
+        obit_did: obit_did
+      properties:
+        id:
+          type: integer
+        obit_did:
+          type: string
+        usn:
+          type: string
+        owner_did:
+          type: string
+        obit_status:
+          description: |
+            Represent available Obit statuses:
+              - FUNCTIONAL
+              - NON_FUNCTIONAL
+              - DISPOSED
+              - STOLEN
+              - DISABLED_BY_OWNER
+          enum:
+          - FUNCTIONAL
+          - NON_FUNCTIONAL
+          - DISPOSED
+          - STOLEN
+          - DISABLED_BY_OWNER
+          type: string
+        manufacturer:
+          type: string
+        part_number:
+          type: string
+        serial_number_hash:
+          type: string
+        modified_at:
+          example: 2020-01-01T13:24:35Z
+          format: date-time
+          type: string
+        root_hash:
+          type: string
+        metadata:
+          description: Get description from Rohi
+          items:
+            $ref: '#/components/schemas/LocalObit_metadata'
+          type: array
+        documents:
+          description: |
+            To generate this link, take an SHA-256 hash of the document, and link to it as https://www.some-website.com?h1=hash-of-document. Note this does not yet adhere to the hashlink standard.
+          items:
+            $ref: '#/components/schemas/LocalObit_documents'
+          type: array
+        structured_data:
+          description: Same as metadata but bigger. Key (string) => Value (string)
+            (hash per line sha256(key + value))
+          items:
+            $ref: '#/components/schemas/LocalObit_structured_data'
+          type: array
+      type: object
+    LocalObit_metadata:
+      description: A record that represent key/value metadata record
+      example:
+        value: Dell R740
+        key: model
+      properties:
+        key:
+          description: Metadata key
+          example: model
+          type: string
+        value:
+          description: Matadata value
+          example: Dell R740
+          type: string
+      required:
+      - key
+      - value
+      type: object
+    LocalObit_documents:
+      description: Document hashlink
+      example:
+        name: Link to device wipe report
+        hashlink: Link to device wipe report
+      properties:
+        name:
+          description: Associative name of hashlink
+          example: Link to device wipe report
+          type: string
+        hashlink:
+          description: Hashlink
+          example: Link to device wipe report
+          type: string
+      required:
+      - hashlink
+      - name
+      type: object
+    LocalObit_structured_data:
+      description: A record that represent key/value structure data record
+      example:
+        value: '{"somekey":"somevalue"}'
+        key: model
+      properties:
+        key:
+          description: Structure data key
+          example: model
+          type: string
+        value:
+          description: Structure data value as a json string
+          example: '{"somekey":"somevalue"}'
+          type: string
+      required:
+      - key
+      - value
+      type: object
