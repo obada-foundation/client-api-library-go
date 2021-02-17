@@ -18,6 +18,7 @@ docs/ObitApi.md
 docs/ObitDefinition.md
 docs/ObitDefinitionResponse.md
 docs/ObitDid.md
+docs/RootHashResponse.md
 git_push.sh
 go.mod
 go.sum
@@ -33,5 +34,6 @@ model_local_obit_structured_data.go
 model_obit_definition.go
 model_obit_definition_response.go
 model_obit_did.go
+model_root_hash_response.go
 response.go
 utils.go

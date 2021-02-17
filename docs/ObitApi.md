@@ -7,6 +7,7 @@ Method | HTTP request | Description
 [**DownloadObitFromChain**](ObitApi.md#DownloadObitFromChain) | **Post** /api/server/obit/download | Download Obit from Blockchain
 [**FetchObitFromChain**](ObitApi.md#FetchObitFromChain) | **Get** /api/server/obit/{obit_did} | Get Obit From Blockchain
 [**GenerateObitDef**](ObitApi.md#GenerateObitDef) | **Get** /api/obit/generate | Generate Obit Definition
+[**GenerateRootHash**](ObitApi.md#GenerateRootHash) | **Post** /api/obit/hash | Generates The Root Hash using the data provided.
 [**GetClientObit**](ObitApi.md#GetClientObit) | **Get** /api/client/obit/{obit_did} | Get Client Obit
 [**SaveClientObit**](ObitApi.md#SaveClientObit) | **Post** /api/client/obit | Save Client Obit
 [**UploadObit**](ObitApi.md#UploadObit) | **Post** /api/server/obit/upload | Upload Obit to Blockchain
@@ -212,6 +213,71 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GenerateRootHash
+
+> RootHashResponse GenerateRootHash(ctx).LocalObit(localObit).Execute()
+
+Generates The Root Hash using the data provided.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    "time"
+    openapiclient "./openapi"
+)
+
+func main() {
+    localObit := *openapiclient.NewLocalObit("Tradeloop", "ObitStatus_example", "Sony", "MWCN2LL/A", "f6fc84c9f21c24907d6bee6eec38cabab5fa9a7be8c4a7827fe9e56f245bd2d5", time.Now()) // LocalObit |  (optional)
+
+    configuration := openapiclient.NewConfiguration()
+    api_client := openapiclient.NewAPIClient(configuration)
+    resp, r, err := api_client.ObitApi.GenerateRootHash(context.Background()).LocalObit(localObit).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `ObitApi.GenerateRootHash``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GenerateRootHash`: RootHashResponse
+    fmt.Fprintf(os.Stdout, "Response from `ObitApi.GenerateRootHash`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGenerateRootHashRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **localObit** | [**LocalObit**](LocalObit.md) |  | 
+
+### Return type
+
+[**RootHashResponse**](RootHashResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

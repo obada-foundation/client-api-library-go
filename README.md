@@ -82,6 +82,7 @@ Class | Method | HTTP request | Description
 *ObitApi* | [**DownloadObitFromChain**](docs/ObitApi.md#downloadobitfromchain) | **Post** /api/server/obit/download | Download Obit from Blockchain
 *ObitApi* | [**FetchObitFromChain**](docs/ObitApi.md#fetchobitfromchain) | **Get** /api/server/obit/{obit_did} | Get Obit From Blockchain
 *ObitApi* | [**GenerateObitDef**](docs/ObitApi.md#generateobitdef) | **Get** /api/obit/generate | Generate Obit Definition
+*ObitApi* | [**GenerateRootHash**](docs/ObitApi.md#generateroothash) | **Post** /api/obit/hash | Generates The Root Hash using the data provided.
 *ObitApi* | [**GetClientObit**](docs/ObitApi.md#getclientobit) | **Get** /api/client/obit/{obit_did} | Get Client Obit
 *ObitApi* | [**SaveClientObit**](docs/ObitApi.md#saveclientobit) | **Post** /api/client/obit | Save Client Obit
 *ObitApi* | [**UploadObit**](docs/ObitApi.md#uploadobit) | **Post** /api/server/obit/upload | Upload Obit to Blockchain
@@ -101,6 +102,7 @@ Class | Method | HTTP request | Description
  - [ObitDefinition](docs/ObitDefinition.md)
  - [ObitDefinitionResponse](docs/ObitDefinitionResponse.md)
  - [ObitDid](docs/ObitDid.md)
+ - [RootHashResponse](docs/RootHashResponse.md)
 
 
 ## Documentation For Authorization

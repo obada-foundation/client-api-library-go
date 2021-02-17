@@ -96,6 +96,24 @@ paths:
       summary: Save Client Obit
       tags:
       - Obit
+  /api/obit/hash:
+    post:
+      operationId: generateRootHash
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocalObit'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RootHashResponse'
+          description: Returns the root hash
+      summary: Generates The Root Hash using the data provided.
+      tags:
+      - Obit
   /api/server/obit/{obit_did}:
     get:
       description: Retrieves Obit information from blockchain but does not download
@@ -432,6 +450,16 @@ components:
           items:
             $ref: '#/components/schemas/LocalObit_structured_data'
           type: array
+      type: object
+    RootHashResponse:
+      example:
+        root_hash: root_hash
+        status: 0
+      properties:
+        status:
+          type: integer
+        root_hash:
+          type: string
       type: object
     LocalObit_metadata:
       description: A record that represent key/value metadata record
