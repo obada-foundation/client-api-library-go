@@ -12,7 +12,7 @@ servers:
 tags:
 - name: Obit
 paths:
-  /api/obit/generate:
+  /api/obit/definition:
     get:
       description: Returns the Obit Definition for a given device_id, part_number
         and serial_number input.

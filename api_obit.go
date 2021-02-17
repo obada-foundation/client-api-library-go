@@ -300,7 +300,7 @@ func (a *ObitApiService) GenerateObitDefExecute(r ApiGenerateObitDefRequest) (Ob
 		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/api/obit/generate"
+	localVarPath := localBasePath + "/api/obit/definition"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
