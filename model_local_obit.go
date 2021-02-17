@@ -26,8 +26,8 @@ type LocalObit struct {
 	Manufacturer string `json:"manufacturer"`
 	// Manufacturer provided. In cases where no part number is provided for the product, use model, or the most specific ID available from the manufacturer. MWCN2LL/A (an iPhone 11 Pro, Silver, 256GB, model A2160)
 	PartNumber string `json:"part_number"`
-	// Serial number hashed with sha256 hash function
-	SerialNumberHash string `json:"serial_number_hash"`
+	// Serial Number
+	SerialNumber string `json:"serial_number"`
 	// Get description from Rohi
 	Metadata *[]LocalObitMetadata `json:"metadata,omitempty"`
 	// To generate this link, take an SHA-256 hash of the document, and link to it as https://www.some-website.com?h1=hash-of-document. Note this does not yet adhere to the hashlink standard. 
@@ -41,13 +41,13 @@ type LocalObit struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewLocalObit(owner string, obitStatus string, manufacturer string, partNumber string, serialNumberHash string, modifiedAt time.Time, ) *LocalObit {
+func NewLocalObit(owner string, obitStatus string, manufacturer string, partNumber string, serialNumber string, modifiedAt time.Time, ) *LocalObit {
 	this := LocalObit{}
 	this.Owner = owner
 	this.ObitStatus = obitStatus
 	this.Manufacturer = manufacturer
 	this.PartNumber = partNumber
-	this.SerialNumberHash = serialNumberHash
+	this.SerialNumber = serialNumber
 	this.ModifiedAt = modifiedAt
 	return &this
 }
@@ -156,28 +156,28 @@ func (o *LocalObit) SetPartNumber(v string) {
 	o.PartNumber = v
 }
 
-// GetSerialNumberHash returns the SerialNumberHash field value
-func (o *LocalObit) GetSerialNumberHash() string {
+// GetSerialNumber returns the SerialNumber field value
+func (o *LocalObit) GetSerialNumber() string {
 	if o == nil  {
 		var ret string
 		return ret
 	}
 
-	return o.SerialNumberHash
+	return o.SerialNumber
 }
 
-// GetSerialNumberHashOk returns a tuple with the SerialNumberHash field value
+// GetSerialNumberOk returns a tuple with the SerialNumber field value
 // and a boolean to check if the value has been set.
-func (o *LocalObit) GetSerialNumberHashOk() (*string, bool) {
+func (o *LocalObit) GetSerialNumberOk() (*string, bool) {
 	if o == nil  {
 		return nil, false
 	}
-	return &o.SerialNumberHash, true
+	return &o.SerialNumber, true
 }
 
-// SetSerialNumberHash sets field value
-func (o *LocalObit) SetSerialNumberHash(v string) {
-	o.SerialNumberHash = v
+// SetSerialNumber sets field value
+func (o *LocalObit) SetSerialNumber(v string) {
+	o.SerialNumber = v
 }
 
 // GetMetadata returns the Metadata field value if set, zero value otherwise.
@@ -315,7 +315,7 @@ func (o LocalObit) MarshalJSON() ([]byte, error) {
 		toSerialize["part_number"] = o.PartNumber
 	}
 	if true {
-		toSerialize["serial_number_hash"] = o.SerialNumberHash
+		toSerialize["serial_number"] = o.SerialNumber
 	}
 	if o.Metadata != nil {
 		toSerialize["metadata"] = o.Metadata

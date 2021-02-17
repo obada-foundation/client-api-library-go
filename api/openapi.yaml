@@ -204,12 +204,12 @@ components:
         - name: Link to device wipe report
           hashlink: Link to device wipe report
         part_number: MWCN2LL/A
+        serial_number: "123456789"
         structured_data:
         - value: '{"somekey":"somevalue"}'
           key: model
         - value: '{"somekey":"somevalue"}'
           key: model
-        serial_number_hash: f6fc84c9f21c24907d6bee6eec38cabab5fa9a7be8c4a7827fe9e56f245bd2d5
         modified_at: 2020-01-01T13:24:35Z
         obit_status: FUNCTIONAL
         manufacturer: Sony
@@ -244,9 +244,9 @@ components:
             manufacturer. MWCN2LL/A (an iPhone 11 Pro, Silver, 256GB, model A2160)
           example: MWCN2LL/A
           type: string
-        serial_number_hash:
-          description: Serial number hashed with sha256 hash function
-          example: f6fc84c9f21c24907d6bee6eec38cabab5fa9a7be8c4a7827fe9e56f245bd2d5
+        serial_number:
+          description: Serial Number
+          example: "123456789"
           type: string
         metadata:
           description: Get description from Rohi
@@ -275,7 +275,7 @@ components:
       - obit_status
       - owner
       - part_number
-      - serial_number_hash
+      - serial_number
     BaseResponse:
       example:
         status: 0

@@ -240,7 +240,7 @@ import (
 )
 
 func main() {
-    localObit := *openapiclient.NewLocalObit("Tradeloop", "ObitStatus_example", "Sony", "MWCN2LL/A", "f6fc84c9f21c24907d6bee6eec38cabab5fa9a7be8c4a7827fe9e56f245bd2d5", time.Now()) // LocalObit |  (optional)
+    localObit := *openapiclient.NewLocalObit("Tradeloop", "ObitStatus_example", "Sony", "MWCN2LL/A", "123456789", time.Now()) // LocalObit |  (optional)
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
@@ -373,7 +373,7 @@ import (
 )
 
 func main() {
-    localObit := *openapiclient.NewLocalObit("Tradeloop", "ObitStatus_example", "Sony", "MWCN2LL/A", "f6fc84c9f21c24907d6bee6eec38cabab5fa9a7be8c4a7827fe9e56f245bd2d5", time.Now()) // LocalObit |  (optional)
+    localObit := *openapiclient.NewLocalObit("Tradeloop", "ObitStatus_example", "Sony", "MWCN2LL/A", "123456789", time.Now()) // LocalObit |  (optional)
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)

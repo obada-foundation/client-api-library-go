@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **ObitStatus** | **string** | Represent available Obit statuses:   - FUNCTIONAL   - NON_FUNCTIONAL   - DISPOSED   - STOLEN   - DISABLED_BY_OWNER  | 
 **Manufacturer** | **string** | Waiting more specific details from Rohi | 
 **PartNumber** | **string** | Manufacturer provided. In cases where no part number is provided for the product, use model, or the most specific ID available from the manufacturer. MWCN2LL/A (an iPhone 11 Pro, Silver, 256GB, model A2160) | 
-**SerialNumberHash** | **string** | Serial number hashed with sha256 hash function | 
+**SerialNumber** | **string** | Serial Number | 
 **Metadata** | Pointer to [**[]LocalObitMetadata**](LocalObitMetadata.md) | Get description from Rohi | [optional] 
 **Documents** | Pointer to [**[]LocalObitDocuments**](LocalObitDocuments.md) | To generate this link, take an SHA-256 hash of the document, and link to it as https://www.some-website.com?h1&#x3D;hash-of-document. Note this does not yet adhere to the hashlink standard.  | [optional] 
 **StructuredData** | Pointer to [**[]LocalObitStructuredData**](LocalObitStructuredData.md) | Same as metadata but bigger. Key (string) &#x3D;&gt; Value (string) (hash per line sha256(key + value)) | [optional] 
@@ -18,7 +18,7 @@ Name | Type | Description | Notes
 
 ### NewLocalObit
 
-`func NewLocalObit(owner string, obitStatus string, manufacturer string, partNumber string, serialNumberHash string, modifiedAt time.Time, ) *LocalObit`
+`func NewLocalObit(owner string, obitStatus string, manufacturer string, partNumber string, serialNumber string, modifiedAt time.Time, ) *LocalObit`
 
 NewLocalObit instantiates a new LocalObit object
 This constructor will assign default values to properties that have it defined,
@@ -113,24 +113,24 @@ and a boolean to check if the value has been set.
 SetPartNumber sets PartNumber field to given value.
 
 
-### GetSerialNumberHash
+### GetSerialNumber
 
-`func (o *LocalObit) GetSerialNumberHash() string`
+`func (o *LocalObit) GetSerialNumber() string`
 
-GetSerialNumberHash returns the SerialNumberHash field if non-nil, zero value otherwise.
+GetSerialNumber returns the SerialNumber field if non-nil, zero value otherwise.
 
-### GetSerialNumberHashOk
+### GetSerialNumberOk
 
-`func (o *LocalObit) GetSerialNumberHashOk() (*string, bool)`
+`func (o *LocalObit) GetSerialNumberOk() (*string, bool)`
 
-GetSerialNumberHashOk returns a tuple with the SerialNumberHash field if it's non-nil, zero value otherwise
+GetSerialNumberOk returns a tuple with the SerialNumber field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSerialNumberHash
+### SetSerialNumber
 
-`func (o *LocalObit) SetSerialNumberHash(v string)`
+`func (o *LocalObit) SetSerialNumber(v string)`
 
-SetSerialNumberHash sets SerialNumberHash field to given value.
+SetSerialNumber sets SerialNumber field to given value.
 
 
 ### GetMetadata
