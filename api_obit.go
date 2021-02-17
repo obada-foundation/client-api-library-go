@@ -75,7 +75,7 @@ func (a *ObitApiService) DownloadObitFromChainExecute(r ApiDownloadObitFromChain
 		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/server/obit/download"
+	localVarPath := localBasePath + "/api/server/obit/download"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
@@ -182,7 +182,7 @@ func (a *ObitApiService) FetchObitFromChainExecute(r ApiFetchObitFromChainReques
 		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/server/obit/{obit_did}"
+	localVarPath := localBasePath + "/api/server/obit/{obit_did}"
 	localVarPath = strings.Replace(localVarPath, "{"+"obit_did"+"}", _neturl.PathEscape(parameterToString(r.obitDid, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -300,7 +300,7 @@ func (a *ObitApiService) GenerateObitDefExecute(r ApiGenerateObitDefRequest) (Ob
 		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/obit/generate"
+	localVarPath := localBasePath + "/api/obit/generate"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
@@ -416,7 +416,7 @@ func (a *ObitApiService) GetClientObitExecute(r ApiGetClientObitRequest) (Client
 		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/client/obit/{obit_did}"
+	localVarPath := localBasePath + "/api/client/obit/{obit_did}"
 	localVarPath = strings.Replace(localVarPath, "{"+"obit_did"+"}", _neturl.PathEscape(parameterToString(r.obitDid, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -523,7 +523,7 @@ func (a *ObitApiService) SaveClientObitExecute(r ApiSaveClientObitRequest) (Clie
 		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/client/obit"
+	localVarPath := localBasePath + "/api/client/obit"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
@@ -632,7 +632,7 @@ func (a *ObitApiService) UploadObitExecute(r ApiUploadObitRequest) (BaseResponse
 		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/server/obit/upload"
+	localVarPath := localBasePath + "/api/server/obit/upload"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}

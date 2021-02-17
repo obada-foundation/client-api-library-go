@@ -12,7 +12,7 @@ servers:
 tags:
 - name: Obit
 paths:
-  /obit/generate:
+  /api/obit/generate:
     get:
       description: Returns the Obit Definition for a given device_id, part_number
         and serial_number input.
@@ -55,7 +55,7 @@ paths:
       summary: Generate Obit Definition
       tags:
       - Obit
-  /client/obit/{obit_did}:
+  /api/client/obit/{obit_did}:
     get:
       operationId: getClientObit
       parameters:
@@ -78,7 +78,7 @@ paths:
       summary: Get Client Obit
       tags:
       - Obit
-  /client/obit:
+  /api/client/obit:
     post:
       operationId: saveClientObit
       requestBody:
@@ -96,7 +96,7 @@ paths:
       summary: Save Client Obit
       tags:
       - Obit
-  /server/obit/{obit_did}:
+  /api/server/obit/{obit_did}:
     get:
       description: Retrieves Obit information from blockchain but does not download
         it.
@@ -121,7 +121,7 @@ paths:
       summary: Get Obit From Blockchain
       tags:
       - Obit
-  /server/obit/upload:
+  /api/server/obit/upload:
     post:
       description: Uploads Obit from client to the Blockchain
       operationId: uploadObit
@@ -140,7 +140,7 @@ paths:
       summary: Upload Obit to Blockchain
       tags:
       - Obit
-  /server/obit/download:
+  /api/server/obit/download:
     post:
       description: Downloads the Obit information from the blockchain to the client.
       operationId: downloadObitFromChain
