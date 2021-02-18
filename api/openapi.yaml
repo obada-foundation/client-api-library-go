@@ -339,21 +339,15 @@ components:
       example:
         obit:
           owner_did: owner_did
-          metadata:
-          - '{}'
-          - '{}'
-          documents:
-          - '{}'
-          - '{}'
+          metadata: '{}'
+          documents: '{}'
           root_hash: root_hash
           serial_number_hash: serial_number_hash
           obit_status: FUNCTIONAL
           manufacturer: manufacturer
           usn: usn
           part_number: part_number
-          structured_data:
-          - '{}'
-          - '{}'
+          structured_data: '{}'
           id: 6
           modified_at: 2020-01-01T13:24:35Z
           obit_did: obit_did
@@ -367,21 +361,15 @@ components:
     ClientObit:
       example:
         owner_did: owner_did
-        metadata:
-        - '{}'
-        - '{}'
-        documents:
-        - '{}'
-        - '{}'
+        metadata: '{}'
+        documents: '{}'
         root_hash: root_hash
         serial_number_hash: serial_number_hash
         obit_status: FUNCTIONAL
         manufacturer: manufacturer
         usn: usn
         part_number: part_number
-        structured_data:
-        - '{}'
-        - '{}'
+        structured_data: '{}'
         id: 6
         modified_at: 2020-01-01T13:24:35Z
         obit_did: obit_did
@@ -423,24 +411,15 @@ components:
           type: string
         metadata:
           description: Get description from Rohi
-          items:
-            description: A record that represent key/value metadata record
-            type: object
-          type: array
+          type: object
         documents:
           description: |
             To generate this link, take an SHA-256 hash of the document, and link to it as https://www.some-website.com?h1=hash-of-document. Note this does not yet adhere to the hashlink standard.
-          items:
-            description: Document hashlink
-            type: object
-          type: array
+          type: object
         structured_data:
           description: Same as metadata but bigger. Key (string) => Value (string)
             (hash per line sha256(key + value))
-          items:
-            description: A record that represent key/value structure data record
-            type: object
-          type: array
+          type: object
       type: object
     RootHashResponse:
       example:
