@@ -14,9 +14,9 @@ Name | Type | Description | Notes
 **SerialNumberHash** | Pointer to **string** |  | [optional] 
 **ModifiedAt** | Pointer to **time.Time** |  | [optional] 
 **RootHash** | Pointer to **string** |  | [optional] 
-**Metadata** | Pointer to [**[]LocalObitMetadata**](LocalObitMetadata.md) | Get description from Rohi | [optional] 
-**Documents** | Pointer to [**[]LocalObitDocuments**](LocalObitDocuments.md) | To generate this link, take an SHA-256 hash of the document, and link to it as https://www.some-website.com?h1&#x3D;hash-of-document. Note this does not yet adhere to the hashlink standard.  | [optional] 
-**StructuredData** | Pointer to [**[]LocalObitStructuredData**](LocalObitStructuredData.md) | Same as metadata but bigger. Key (string) &#x3D;&gt; Value (string) (hash per line sha256(key + value)) | [optional] 
+**Metadata** | Pointer to **[]map[string]interface{}** | Get description from Rohi | [optional] 
+**Documents** | Pointer to **[]map[string]interface{}** | To generate this link, take an SHA-256 hash of the document, and link to it as https://www.some-website.com?h1&#x3D;hash-of-document. Note this does not yet adhere to the hashlink standard.  | [optional] 
+**StructuredData** | Pointer to **[]map[string]interface{}** | Same as metadata but bigger. Key (string) &#x3D;&gt; Value (string) (hash per line sha256(key + value)) | [optional] 
 
 ## Methods
 
@@ -289,20 +289,20 @@ HasRootHash returns a boolean if a field has been set.
 
 ### GetMetadata
 
-`func (o *ClientObit) GetMetadata() []LocalObitMetadata`
+`func (o *ClientObit) GetMetadata() []map[string]interface{}`
 
 GetMetadata returns the Metadata field if non-nil, zero value otherwise.
 
 ### GetMetadataOk
 
-`func (o *ClientObit) GetMetadataOk() (*[]LocalObitMetadata, bool)`
+`func (o *ClientObit) GetMetadataOk() (*[]map[string]interface{}, bool)`
 
 GetMetadataOk returns a tuple with the Metadata field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetMetadata
 
-`func (o *ClientObit) SetMetadata(v []LocalObitMetadata)`
+`func (o *ClientObit) SetMetadata(v []map[string]interface{})`
 
 SetMetadata sets Metadata field to given value.
 
@@ -314,20 +314,20 @@ HasMetadata returns a boolean if a field has been set.
 
 ### GetDocuments
 
-`func (o *ClientObit) GetDocuments() []LocalObitDocuments`
+`func (o *ClientObit) GetDocuments() []map[string]interface{}`
 
 GetDocuments returns the Documents field if non-nil, zero value otherwise.
 
 ### GetDocumentsOk
 
-`func (o *ClientObit) GetDocumentsOk() (*[]LocalObitDocuments, bool)`
+`func (o *ClientObit) GetDocumentsOk() (*[]map[string]interface{}, bool)`
 
 GetDocumentsOk returns a tuple with the Documents field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDocuments
 
-`func (o *ClientObit) SetDocuments(v []LocalObitDocuments)`
+`func (o *ClientObit) SetDocuments(v []map[string]interface{})`
 
 SetDocuments sets Documents field to given value.
 
@@ -339,20 +339,20 @@ HasDocuments returns a boolean if a field has been set.
 
 ### GetStructuredData
 
-`func (o *ClientObit) GetStructuredData() []LocalObitStructuredData`
+`func (o *ClientObit) GetStructuredData() []map[string]interface{}`
 
 GetStructuredData returns the StructuredData field if non-nil, zero value otherwise.
 
 ### GetStructuredDataOk
 
-`func (o *ClientObit) GetStructuredDataOk() (*[]LocalObitStructuredData, bool)`
+`func (o *ClientObit) GetStructuredDataOk() (*[]map[string]interface{}, bool)`
 
 GetStructuredDataOk returns a tuple with the StructuredData field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetStructuredData
 
-`func (o *ClientObit) SetStructuredData(v []LocalObitStructuredData)`
+`func (o *ClientObit) SetStructuredData(v []map[string]interface{})`
 
 SetStructuredData sets StructuredData field to given value.
 

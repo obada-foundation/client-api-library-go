@@ -30,11 +30,11 @@ type ClientObit struct {
 	ModifiedAt *time.Time `json:"modified_at,omitempty"`
 	RootHash *string `json:"root_hash,omitempty"`
 	// Get description from Rohi
-	Metadata *[]LocalObitMetadata `json:"metadata,omitempty"`
+	Metadata *[]map[string]interface{} `json:"metadata,omitempty"`
 	// To generate this link, take an SHA-256 hash of the document, and link to it as https://www.some-website.com?h1=hash-of-document. Note this does not yet adhere to the hashlink standard. 
-	Documents *[]LocalObitDocuments `json:"documents,omitempty"`
+	Documents *[]map[string]interface{} `json:"documents,omitempty"`
 	// Same as metadata but bigger. Key (string) => Value (string) (hash per line sha256(key + value))
-	StructuredData *[]LocalObitStructuredData `json:"structured_data,omitempty"`
+	StructuredData *[]map[string]interface{} `json:"structured_data,omitempty"`
 }
 
 // NewClientObit instantiates a new ClientObit object
@@ -375,9 +375,9 @@ func (o *ClientObit) SetRootHash(v string) {
 }
 
 // GetMetadata returns the Metadata field value if set, zero value otherwise.
-func (o *ClientObit) GetMetadata() []LocalObitMetadata {
+func (o *ClientObit) GetMetadata() []map[string]interface{} {
 	if o == nil || o.Metadata == nil {
-		var ret []LocalObitMetadata
+		var ret []map[string]interface{}
 		return ret
 	}
 	return *o.Metadata
@@ -385,7 +385,7 @@ func (o *ClientObit) GetMetadata() []LocalObitMetadata {
 
 // GetMetadataOk returns a tuple with the Metadata field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ClientObit) GetMetadataOk() (*[]LocalObitMetadata, bool) {
+func (o *ClientObit) GetMetadataOk() (*[]map[string]interface{}, bool) {
 	if o == nil || o.Metadata == nil {
 		return nil, false
 	}
@@ -401,15 +401,15 @@ func (o *ClientObit) HasMetadata() bool {
 	return false
 }
 
-// SetMetadata gets a reference to the given []LocalObitMetadata and assigns it to the Metadata field.
-func (o *ClientObit) SetMetadata(v []LocalObitMetadata) {
+// SetMetadata gets a reference to the given []map[string]interface{} and assigns it to the Metadata field.
+func (o *ClientObit) SetMetadata(v []map[string]interface{}) {
 	o.Metadata = &v
 }
 
 // GetDocuments returns the Documents field value if set, zero value otherwise.
-func (o *ClientObit) GetDocuments() []LocalObitDocuments {
+func (o *ClientObit) GetDocuments() []map[string]interface{} {
 	if o == nil || o.Documents == nil {
-		var ret []LocalObitDocuments
+		var ret []map[string]interface{}
 		return ret
 	}
 	return *o.Documents
@@ -417,7 +417,7 @@ func (o *ClientObit) GetDocuments() []LocalObitDocuments {
 
 // GetDocumentsOk returns a tuple with the Documents field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ClientObit) GetDocumentsOk() (*[]LocalObitDocuments, bool) {
+func (o *ClientObit) GetDocumentsOk() (*[]map[string]interface{}, bool) {
 	if o == nil || o.Documents == nil {
 		return nil, false
 	}
@@ -433,15 +433,15 @@ func (o *ClientObit) HasDocuments() bool {
 	return false
 }
 
-// SetDocuments gets a reference to the given []LocalObitDocuments and assigns it to the Documents field.
-func (o *ClientObit) SetDocuments(v []LocalObitDocuments) {
+// SetDocuments gets a reference to the given []map[string]interface{} and assigns it to the Documents field.
+func (o *ClientObit) SetDocuments(v []map[string]interface{}) {
 	o.Documents = &v
 }
 
 // GetStructuredData returns the StructuredData field value if set, zero value otherwise.
-func (o *ClientObit) GetStructuredData() []LocalObitStructuredData {
+func (o *ClientObit) GetStructuredData() []map[string]interface{} {
 	if o == nil || o.StructuredData == nil {
-		var ret []LocalObitStructuredData
+		var ret []map[string]interface{}
 		return ret
 	}
 	return *o.StructuredData
@@ -449,7 +449,7 @@ func (o *ClientObit) GetStructuredData() []LocalObitStructuredData {
 
 // GetStructuredDataOk returns a tuple with the StructuredData field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ClientObit) GetStructuredDataOk() (*[]LocalObitStructuredData, bool) {
+func (o *ClientObit) GetStructuredDataOk() (*[]map[string]interface{}, bool) {
 	if o == nil || o.StructuredData == nil {
 		return nil, false
 	}
@@ -465,8 +465,8 @@ func (o *ClientObit) HasStructuredData() bool {
 	return false
 }
 
-// SetStructuredData gets a reference to the given []LocalObitStructuredData and assigns it to the StructuredData field.
-func (o *ClientObit) SetStructuredData(v []LocalObitStructuredData) {
+// SetStructuredData gets a reference to the given []map[string]interface{} and assigns it to the StructuredData field.
+func (o *ClientObit) SetStructuredData(v []map[string]interface{}) {
 	o.StructuredData = &v
 }
 

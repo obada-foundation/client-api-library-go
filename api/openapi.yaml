@@ -340,15 +340,11 @@ components:
         obit:
           owner_did: owner_did
           metadata:
-          - value: Dell R740
-            key: model
-          - value: Dell R740
-            key: model
+          - '{}'
+          - '{}'
           documents:
-          - name: Link to device wipe report
-            hashlink: Link to device wipe report
-          - name: Link to device wipe report
-            hashlink: Link to device wipe report
+          - '{}'
+          - '{}'
           root_hash: root_hash
           serial_number_hash: serial_number_hash
           obit_status: FUNCTIONAL
@@ -356,10 +352,8 @@ components:
           usn: usn
           part_number: part_number
           structured_data:
-          - value: '{"somekey":"somevalue"}'
-            key: model
-          - value: '{"somekey":"somevalue"}'
-            key: model
+          - '{}'
+          - '{}'
           id: 6
           modified_at: 2020-01-01T13:24:35Z
           obit_did: obit_did
@@ -374,15 +368,11 @@ components:
       example:
         owner_did: owner_did
         metadata:
-        - value: Dell R740
-          key: model
-        - value: Dell R740
-          key: model
+        - '{}'
+        - '{}'
         documents:
-        - name: Link to device wipe report
-          hashlink: Link to device wipe report
-        - name: Link to device wipe report
-          hashlink: Link to device wipe report
+        - '{}'
+        - '{}'
         root_hash: root_hash
         serial_number_hash: serial_number_hash
         obit_status: FUNCTIONAL
@@ -390,10 +380,8 @@ components:
         usn: usn
         part_number: part_number
         structured_data:
-        - value: '{"somekey":"somevalue"}'
-          key: model
-        - value: '{"somekey":"somevalue"}'
-          key: model
+        - '{}'
+        - '{}'
         id: 6
         modified_at: 2020-01-01T13:24:35Z
         obit_did: obit_did
@@ -436,19 +424,22 @@ components:
         metadata:
           description: Get description from Rohi
           items:
-            $ref: '#/components/schemas/LocalObit_metadata'
+            description: A record that represent key/value metadata record
+            type: object
           type: array
         documents:
           description: |
             To generate this link, take an SHA-256 hash of the document, and link to it as https://www.some-website.com?h1=hash-of-document. Note this does not yet adhere to the hashlink standard.
           items:
-            $ref: '#/components/schemas/LocalObit_documents'
+            description: Document hashlink
+            type: object
           type: array
         structured_data:
           description: Same as metadata but bigger. Key (string) => Value (string)
             (hash per line sha256(key + value))
           items:
-            $ref: '#/components/schemas/LocalObit_structured_data'
+            description: A record that represent key/value structure data record
+            type: object
           type: array
       type: object
     RootHashResponse:
