@@ -27,7 +27,7 @@ type LocalObitStructuredData struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewLocalObitStructuredData(key string, value string, ) *LocalObitStructuredData {
+func NewLocalObitStructuredData(key string, value string) *LocalObitStructuredData {
 	this := LocalObitStructuredData{}
 	this.Key = key
 	this.Value = value
@@ -44,7 +44,7 @@ func NewLocalObitStructuredDataWithDefaults() *LocalObitStructuredData {
 
 // GetKey returns the Key field value
 func (o *LocalObitStructuredData) GetKey() string {
-	if o == nil  {
+	if o == nil {
 		var ret string
 		return ret
 	}
@@ -68,7 +68,7 @@ func (o *LocalObitStructuredData) SetKey(v string) {
 
 // GetValue returns the Value field value
 func (o *LocalObitStructuredData) GetValue() string {
-	if o == nil  {
+	if o == nil {
 		var ret string
 		return ret
 	}

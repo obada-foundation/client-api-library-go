@@ -27,7 +27,7 @@ type LocalObitDocuments struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewLocalObitDocuments(name string, hashlink string, ) *LocalObitDocuments {
+func NewLocalObitDocuments(name string, hashlink string) *LocalObitDocuments {
 	this := LocalObitDocuments{}
 	this.Name = name
 	this.Hashlink = hashlink
@@ -44,7 +44,7 @@ func NewLocalObitDocumentsWithDefaults() *LocalObitDocuments {
 
 // GetName returns the Name field value
 func (o *LocalObitDocuments) GetName() string {
-	if o == nil  {
+	if o == nil {
 		var ret string
 		return ret
 	}
@@ -68,7 +68,7 @@ func (o *LocalObitDocuments) SetName(v string) {
 
 // GetHashlink returns the Hashlink field value
 func (o *LocalObitDocuments) GetHashlink() string {
-	if o == nil  {
+	if o == nil {
 		var ret string
 		return ret
 	}

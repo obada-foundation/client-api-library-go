@@ -25,7 +25,7 @@ type ObitDid struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewObitDid(obitDid string, ) *ObitDid {
+func NewObitDid(obitDid string) *ObitDid {
 	this := ObitDid{}
 	this.ObitDid = obitDid
 	return &this
@@ -41,7 +41,7 @@ func NewObitDidWithDefaults() *ObitDid {
 
 // GetObitDid returns the ObitDid field value
 func (o *ObitDid) GetObitDid() string {
-	if o == nil  {
+	if o == nil {
 		var ret string
 		return ret
 	}

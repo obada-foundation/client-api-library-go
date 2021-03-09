@@ -41,7 +41,7 @@ type LocalObit struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewLocalObit(owner string, obitStatus string, manufacturer string, partNumber string, serialNumber string, modifiedAt time.Time, ) *LocalObit {
+func NewLocalObit(owner string, obitStatus string, manufacturer string, partNumber string, serialNumber string, modifiedAt time.Time) *LocalObit {
 	this := LocalObit{}
 	this.Owner = owner
 	this.ObitStatus = obitStatus
@@ -62,7 +62,7 @@ func NewLocalObitWithDefaults() *LocalObit {
 
 // GetOwner returns the Owner field value
 func (o *LocalObit) GetOwner() string {
-	if o == nil  {
+	if o == nil {
 		var ret string
 		return ret
 	}
@@ -86,7 +86,7 @@ func (o *LocalObit) SetOwner(v string) {
 
 // GetObitStatus returns the ObitStatus field value
 func (o *LocalObit) GetObitStatus() string {
-	if o == nil  {
+	if o == nil {
 		var ret string
 		return ret
 	}
@@ -110,7 +110,7 @@ func (o *LocalObit) SetObitStatus(v string) {
 
 // GetManufacturer returns the Manufacturer field value
 func (o *LocalObit) GetManufacturer() string {
-	if o == nil  {
+	if o == nil {
 		var ret string
 		return ret
 	}
@@ -134,7 +134,7 @@ func (o *LocalObit) SetManufacturer(v string) {
 
 // GetPartNumber returns the PartNumber field value
 func (o *LocalObit) GetPartNumber() string {
-	if o == nil  {
+	if o == nil {
 		var ret string
 		return ret
 	}
@@ -158,7 +158,7 @@ func (o *LocalObit) SetPartNumber(v string) {
 
 // GetSerialNumber returns the SerialNumber field value
 func (o *LocalObit) GetSerialNumber() string {
-	if o == nil  {
+	if o == nil {
 		var ret string
 		return ret
 	}
@@ -278,7 +278,7 @@ func (o *LocalObit) SetStructuredData(v []LocalObitStructuredData) {
 
 // GetModifiedAt returns the ModifiedAt field value
 func (o *LocalObit) GetModifiedAt() time.Time {
-	if o == nil  {
+	if o == nil {
 		var ret time.Time
 		return ret
 	}
