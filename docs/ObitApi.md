@@ -38,8 +38,8 @@ func main() {
     obitDid := *openapiclient.NewObitDid("did:obada:fe096095-e0f0-4918-9607-6567bd5756b5") // ObitDid |  (optional)
 
     configuration := openapiclient.NewConfiguration()
-    api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.ObitApi.DownloadObitFromChain(context.Background()).ObitDid(obitDid).Execute()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.ObitApi.DownloadObitFromChain(context.Background()).ObitDid(obitDid).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `ObitApi.DownloadObitFromChain``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -104,8 +104,8 @@ func main() {
     obitDid := "did:obada:81413bc1ad2074a6ae35d1f65f64f1bca2e8a20959f37ef0349a729ddc567d9b" // string | Required.
 
     configuration := openapiclient.NewConfiguration()
-    api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.ObitApi.FetchObitFromChain(context.Background(), obitDid).Execute()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.ObitApi.FetchObitFromChain(context.Background(), obitDid).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `ObitApi.FetchObitFromChain``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -176,8 +176,8 @@ func main() {
     serialNumber := "123456789" // string | Serial Number (Required)
 
     configuration := openapiclient.NewConfiguration()
-    api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.ObitApi.GenerateObitDef(context.Background()).Manufacturer(manufacturer).PartNumber(partNumber).SerialNumber(serialNumber).Execute()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.ObitApi.GenerateObitDef(context.Background()).Manufacturer(manufacturer).PartNumber(partNumber).SerialNumber(serialNumber).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `ObitApi.GenerateObitDef``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -226,6 +226,8 @@ No authorization required
 
 Generates The Root Hash using the data provided.
 
+
+
 ### Example
 
 ```go
@@ -243,8 +245,8 @@ func main() {
     localObit := *openapiclient.NewLocalObit("Tradeloop", "ObitStatus_example", "Sony", "MWCN2LL/A", "123456789", time.Now()) // LocalObit |  (optional)
 
     configuration := openapiclient.NewConfiguration()
-    api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.ObitApi.GenerateRootHash(context.Background()).LocalObit(localObit).Execute()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.ObitApi.GenerateRootHash(context.Background()).LocalObit(localObit).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `ObitApi.GenerateRootHash``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -291,6 +293,8 @@ No authorization required
 
 Get Client Obit
 
+
+
 ### Example
 
 ```go
@@ -307,8 +311,8 @@ func main() {
     obitDid := "did:obada:81413bc1ad2074a6ae35d1f65f64f1bca2e8a20959f37ef0349a729ddc567d9b" // string | Required.
 
     configuration := openapiclient.NewConfiguration()
-    api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.ObitApi.GetClientObit(context.Background(), obitDid).Execute()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.ObitApi.GetClientObit(context.Background(), obitDid).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `ObitApi.GetClientObit``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -359,6 +363,8 @@ No authorization required
 
 Save Client Obit
 
+
+
 ### Example
 
 ```go
@@ -376,8 +382,8 @@ func main() {
     localObit := *openapiclient.NewLocalObit("Tradeloop", "ObitStatus_example", "Sony", "MWCN2LL/A", "123456789", time.Now()) // LocalObit |  (optional)
 
     configuration := openapiclient.NewConfiguration()
-    api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.ObitApi.SaveClientObit(context.Background()).LocalObit(localObit).Execute()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.ObitApi.SaveClientObit(context.Background()).LocalObit(localObit).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `ObitApi.SaveClientObit``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -442,8 +448,8 @@ func main() {
     obitDid := *openapiclient.NewObitDid("did:obada:fe096095-e0f0-4918-9607-6567bd5756b5") // ObitDid |  (optional)
 
     configuration := openapiclient.NewConfiguration()
-    api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.ObitApi.UploadObit(context.Background()).ObitDid(obitDid).Execute()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.ObitApi.UploadObit(context.Background()).ObitDid(obitDid).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `ObitApi.UploadObit``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)

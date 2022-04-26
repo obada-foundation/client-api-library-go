@@ -14,8 +14,8 @@ tags:
 paths:
   /api/obit/definition:
     get:
-      description: Returns the Obit Definition for a given device_id, part_number
-        and serial_number input.
+      description: "Returns the Obit Definition for a given device_id, part_number\
+        \ and serial_number input."
       operationId: generateObitDef
       parameters:
       - description: Device Id (Required)
@@ -57,6 +57,7 @@ paths:
       - Obit
   /api/client/obit/{obit_did}:
     get:
+      description: ""
       operationId: getClientObit
       parameters:
       - description: Required.
@@ -80,6 +81,7 @@ paths:
       - Obit
   /api/client/obit:
     post:
+      description: ""
       operationId: saveClientObit
       requestBody:
         content:
@@ -98,6 +100,7 @@ paths:
       - Obit
   /api/obit/hash:
     post:
+      description: ""
       operationId: generateRootHash
       requestBody:
         content:
@@ -206,9 +209,9 @@ components:
         part_number: MWCN2LL/A
         serial_number: "123456789"
         structured_data:
-        - value: '{"somekey":"somevalue"}'
+        - value: "{\"somekey\":\"somevalue\"}"
           key: model
-        - value: '{"somekey":"somevalue"}'
+        - value: "{\"somekey\":\"somevalue\"}"
           key: model
         modified_at: 2020-01-01T13:24:35Z
         obit_status: FUNCTIONAL
@@ -239,9 +242,9 @@ components:
           example: Sony
           type: string
         part_number:
-          description: Manufacturer provided. In cases where no part number is provided
-            for the product, use model, or the most specific ID available from the
-            manufacturer. MWCN2LL/A (an iPhone 11 Pro, Silver, 256GB, model A2160)
+          description: "Manufacturer provided. In cases where no part number is provided\
+            \ for the product, use model, or the most specific ID available from the\
+            \ manufacturer. MWCN2LL/A (an iPhone 11 Pro, Silver, 256GB, model A2160)"
           example: MWCN2LL/A
           type: string
         serial_number:
@@ -251,19 +254,20 @@ components:
         metadata:
           description: Get description from Rohi
           items:
-            $ref: '#/components/schemas/LocalObit_metadata'
+            $ref: '#/components/schemas/LocalObit_metadata_inner'
           type: array
         documents:
-          description: |
-            To generate this link, take an SHA-256 hash of the document, and link to it as https://www.some-website.com?h1=hash-of-document. Note this does not yet adhere to the hashlink standard.
+          description: "To generate this link, take an SHA-256 hash of the document,\
+            \ and link to it as https://www.some-website.com?h1=hash-of-document.\
+            \ Note this does not yet adhere to the hashlink standard.\n"
           items:
-            $ref: '#/components/schemas/LocalObit_documents'
+            $ref: '#/components/schemas/LocalObit_documents_inner'
           type: array
         structured_data:
           description: Same as metadata but bigger. Key (string) => Value (string)
             (hash per line sha256(key + value))
           items:
-            $ref: '#/components/schemas/LocalObit_structured_data'
+            $ref: '#/components/schemas/LocalObit_structured_data_inner'
           type: array
         modified_at:
           example: 2020-01-01T13:24:35Z
@@ -339,15 +343,15 @@ components:
       example:
         obit:
           owner_did: owner_did
-          metadata: '{}'
-          documents: '{}'
+          metadata: "{}"
+          documents: "{}"
           root_hash: root_hash
           serial_number_hash: serial_number_hash
           obit_status: FUNCTIONAL
           manufacturer: manufacturer
           usn: usn
           part_number: part_number
-          structured_data: '{}'
+          structured_data: "{}"
           id: 6
           modified_at: 2020-01-01T13:24:35Z
           obit_did: obit_did
@@ -361,15 +365,15 @@ components:
     ClientObit:
       example:
         owner_did: owner_did
-        metadata: '{}'
-        documents: '{}'
+        metadata: "{}"
+        documents: "{}"
         root_hash: root_hash
         serial_number_hash: serial_number_hash
         obit_status: FUNCTIONAL
         manufacturer: manufacturer
         usn: usn
         part_number: part_number
-        structured_data: '{}'
+        structured_data: "{}"
         id: 6
         modified_at: 2020-01-01T13:24:35Z
         obit_did: obit_did
@@ -413,8 +417,9 @@ components:
           description: Get description from Rohi
           type: object
         documents:
-          description: |
-            To generate this link, take an SHA-256 hash of the document, and link to it as https://www.some-website.com?h1=hash-of-document. Note this does not yet adhere to the hashlink standard.
+          description: "To generate this link, take an SHA-256 hash of the document,\
+            \ and link to it as https://www.some-website.com?h1=hash-of-document.\
+            \ Note this does not yet adhere to the hashlink standard.\n"
           type: object
         structured_data:
           description: Same as metadata but bigger. Key (string) => Value (string)
@@ -431,7 +436,7 @@ components:
         root_hash:
           type: string
       type: object
-    LocalObit_metadata:
+    LocalObit_metadata_inner:
       description: A record that represent key/value metadata record
       example:
         value: Dell R740
@@ -449,7 +454,7 @@ components:
       - key
       - value
       type: object
-    LocalObit_documents:
+    LocalObit_documents_inner:
       description: Document hashlink
       example:
         name: Link to device wipe report
@@ -467,10 +472,10 @@ components:
       - hashlink
       - name
       type: object
-    LocalObit_structured_data:
+    LocalObit_structured_data_inner:
       description: A record that represent key/value structure data record
       example:
-        value: '{"somekey":"somevalue"}'
+        value: "{\"somekey\":\"somevalue\"}"
         key: model
       properties:
         key:
@@ -479,7 +484,7 @@ components:
           type: string
         value:
           description: Structure data value as a json string
-          example: '{"somekey":"somevalue"}'
+          example: "{\"somekey\":\"somevalue\"}"
           type: string
       required:
       - key

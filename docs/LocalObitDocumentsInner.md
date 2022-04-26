@@ -1,4 +1,4 @@
-# LocalObitDocuments
+# LocalObitDocumentsInner
 
 ## Properties
 
@@ -9,59 +9,59 @@ Name | Type | Description | Notes
 
 ## Methods
 
-### NewLocalObitDocuments
+### NewLocalObitDocumentsInner
 
-`func NewLocalObitDocuments(name string, hashlink string, ) *LocalObitDocuments`
+`func NewLocalObitDocumentsInner(name string, hashlink string, ) *LocalObitDocumentsInner`
 
-NewLocalObitDocuments instantiates a new LocalObitDocuments object
+NewLocalObitDocumentsInner instantiates a new LocalObitDocumentsInner object
 This constructor will assign default values to properties that have it defined,
 and makes sure properties required by API are set, but the set of arguments
 will change when the set of required properties is changed
 
-### NewLocalObitDocumentsWithDefaults
+### NewLocalObitDocumentsInnerWithDefaults
 
-`func NewLocalObitDocumentsWithDefaults() *LocalObitDocuments`
+`func NewLocalObitDocumentsInnerWithDefaults() *LocalObitDocumentsInner`
 
-NewLocalObitDocumentsWithDefaults instantiates a new LocalObitDocuments object
+NewLocalObitDocumentsInnerWithDefaults instantiates a new LocalObitDocumentsInner object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
 ### GetName
 
-`func (o *LocalObitDocuments) GetName() string`
+`func (o *LocalObitDocumentsInner) GetName() string`
 
 GetName returns the Name field if non-nil, zero value otherwise.
 
 ### GetNameOk
 
-`func (o *LocalObitDocuments) GetNameOk() (*string, bool)`
+`func (o *LocalObitDocumentsInner) GetNameOk() (*string, bool)`
 
 GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetName
 
-`func (o *LocalObitDocuments) SetName(v string)`
+`func (o *LocalObitDocumentsInner) SetName(v string)`
 
 SetName sets Name field to given value.
 
 
 ### GetHashlink
 
-`func (o *LocalObitDocuments) GetHashlink() string`
+`func (o *LocalObitDocumentsInner) GetHashlink() string`
 
 GetHashlink returns the Hashlink field if non-nil, zero value otherwise.
 
 ### GetHashlinkOk
 
-`func (o *LocalObitDocuments) GetHashlinkOk() (*string, bool)`
+`func (o *LocalObitDocumentsInner) GetHashlinkOk() (*string, bool)`
 
 GetHashlinkOk returns a tuple with the Hashlink field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetHashlink
 
-`func (o *LocalObitDocuments) SetHashlink(v string)`
+`func (o *LocalObitDocumentsInner) SetHashlink(v string)`
 
 SetHashlink sets Hashlink field to given value.
 

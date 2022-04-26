@@ -9,9 +9,9 @@ Name | Type | Description | Notes
 **Manufacturer** | **string** | Waiting more specific details from Rohi | 
 **PartNumber** | **string** | Manufacturer provided. In cases where no part number is provided for the product, use model, or the most specific ID available from the manufacturer. MWCN2LL/A (an iPhone 11 Pro, Silver, 256GB, model A2160) | 
 **SerialNumber** | **string** | Serial Number | 
-**Metadata** | Pointer to [**[]LocalObitMetadata**](LocalObitMetadata.md) | Get description from Rohi | [optional] 
-**Documents** | Pointer to [**[]LocalObitDocuments**](LocalObitDocuments.md) | To generate this link, take an SHA-256 hash of the document, and link to it as https://www.some-website.com?h1&#x3D;hash-of-document. Note this does not yet adhere to the hashlink standard.  | [optional] 
-**StructuredData** | Pointer to [**[]LocalObitStructuredData**](LocalObitStructuredData.md) | Same as metadata but bigger. Key (string) &#x3D;&gt; Value (string) (hash per line sha256(key + value)) | [optional] 
+**Metadata** | Pointer to [**[]LocalObitMetadataInner**](LocalObitMetadataInner.md) | Get description from Rohi | [optional] 
+**Documents** | Pointer to [**[]LocalObitDocumentsInner**](LocalObitDocumentsInner.md) | To generate this link, take an SHA-256 hash of the document, and link to it as https://www.some-website.com?h1&#x3D;hash-of-document. Note this does not yet adhere to the hashlink standard.  | [optional] 
+**StructuredData** | Pointer to [**[]LocalObitStructuredDataInner**](LocalObitStructuredDataInner.md) | Same as metadata but bigger. Key (string) &#x3D;&gt; Value (string) (hash per line sha256(key + value)) | [optional] 
 **ModifiedAt** | **time.Time** |  | 
 
 ## Methods
@@ -135,20 +135,20 @@ SetSerialNumber sets SerialNumber field to given value.
 
 ### GetMetadata
 
-`func (o *LocalObit) GetMetadata() []LocalObitMetadata`
+`func (o *LocalObit) GetMetadata() []LocalObitMetadataInner`
 
 GetMetadata returns the Metadata field if non-nil, zero value otherwise.
 
 ### GetMetadataOk
 
-`func (o *LocalObit) GetMetadataOk() (*[]LocalObitMetadata, bool)`
+`func (o *LocalObit) GetMetadataOk() (*[]LocalObitMetadataInner, bool)`
 
 GetMetadataOk returns a tuple with the Metadata field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetMetadata
 
-`func (o *LocalObit) SetMetadata(v []LocalObitMetadata)`
+`func (o *LocalObit) SetMetadata(v []LocalObitMetadataInner)`
 
 SetMetadata sets Metadata field to given value.
 
@@ -160,20 +160,20 @@ HasMetadata returns a boolean if a field has been set.
 
 ### GetDocuments
 
-`func (o *LocalObit) GetDocuments() []LocalObitDocuments`
+`func (o *LocalObit) GetDocuments() []LocalObitDocumentsInner`
 
 GetDocuments returns the Documents field if non-nil, zero value otherwise.
 
 ### GetDocumentsOk
 
-`func (o *LocalObit) GetDocumentsOk() (*[]LocalObitDocuments, bool)`
+`func (o *LocalObit) GetDocumentsOk() (*[]LocalObitDocumentsInner, bool)`
 
 GetDocumentsOk returns a tuple with the Documents field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDocuments
 
-`func (o *LocalObit) SetDocuments(v []LocalObitDocuments)`
+`func (o *LocalObit) SetDocuments(v []LocalObitDocumentsInner)`
 
 SetDocuments sets Documents field to given value.
 
@@ -185,20 +185,20 @@ HasDocuments returns a boolean if a field has been set.
 
 ### GetStructuredData
 
-`func (o *LocalObit) GetStructuredData() []LocalObitStructuredData`
+`func (o *LocalObit) GetStructuredData() []LocalObitStructuredDataInner`
 
 GetStructuredData returns the StructuredData field if non-nil, zero value otherwise.
 
 ### GetStructuredDataOk
 
-`func (o *LocalObit) GetStructuredDataOk() (*[]LocalObitStructuredData, bool)`
+`func (o *LocalObit) GetStructuredDataOk() (*[]LocalObitStructuredDataInner, bool)`
 
 GetStructuredDataOk returns a tuple with the StructuredData field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetStructuredData
 
-`func (o *LocalObit) SetStructuredData(v []LocalObitStructuredData)`
+`func (o *LocalObit) SetStructuredData(v []LocalObitStructuredDataInner)`
 
 SetStructuredData sets StructuredData field to given value.
 

@@ -1,67 +1,67 @@
-# LocalObitStructuredData
+# LocalObitMetadataInner
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Key** | **string** | Structure data key | 
-**Value** | **string** | Structure data value as a json string | 
+**Key** | **string** | Metadata key | 
+**Value** | **string** | Matadata value | 
 
 ## Methods
 
-### NewLocalObitStructuredData
+### NewLocalObitMetadataInner
 
-`func NewLocalObitStructuredData(key string, value string, ) *LocalObitStructuredData`
+`func NewLocalObitMetadataInner(key string, value string, ) *LocalObitMetadataInner`
 
-NewLocalObitStructuredData instantiates a new LocalObitStructuredData object
+NewLocalObitMetadataInner instantiates a new LocalObitMetadataInner object
 This constructor will assign default values to properties that have it defined,
 and makes sure properties required by API are set, but the set of arguments
 will change when the set of required properties is changed
 
-### NewLocalObitStructuredDataWithDefaults
+### NewLocalObitMetadataInnerWithDefaults
 
-`func NewLocalObitStructuredDataWithDefaults() *LocalObitStructuredData`
+`func NewLocalObitMetadataInnerWithDefaults() *LocalObitMetadataInner`
 
-NewLocalObitStructuredDataWithDefaults instantiates a new LocalObitStructuredData object
+NewLocalObitMetadataInnerWithDefaults instantiates a new LocalObitMetadataInner object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
 ### GetKey
 
-`func (o *LocalObitStructuredData) GetKey() string`
+`func (o *LocalObitMetadataInner) GetKey() string`
 
 GetKey returns the Key field if non-nil, zero value otherwise.
 
 ### GetKeyOk
 
-`func (o *LocalObitStructuredData) GetKeyOk() (*string, bool)`
+`func (o *LocalObitMetadataInner) GetKeyOk() (*string, bool)`
 
 GetKeyOk returns a tuple with the Key field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetKey
 
-`func (o *LocalObitStructuredData) SetKey(v string)`
+`func (o *LocalObitMetadataInner) SetKey(v string)`
 
 SetKey sets Key field to given value.
 
 
 ### GetValue
 
-`func (o *LocalObitStructuredData) GetValue() string`
+`func (o *LocalObitMetadataInner) GetValue() string`
 
 GetValue returns the Value field if non-nil, zero value otherwise.
 
 ### GetValueOk
 
-`func (o *LocalObitStructuredData) GetValueOk() (*string, bool)`
+`func (o *LocalObitMetadataInner) GetValueOk() (*string, bool)`
 
 GetValueOk returns a tuple with the Value field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetValue
 
-`func (o *LocalObitStructuredData) SetValue(v string)`
+`func (o *LocalObitMetadataInner) SetValue(v string)`
 
 SetValue sets Value field to given value.
 

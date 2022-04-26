@@ -11,9 +11,9 @@ docs/BlockChainObitResponse.md
 docs/ClientObit.md
 docs/ClientObitResponse.md
 docs/LocalObit.md
-docs/LocalObitDocuments.md
-docs/LocalObitMetadata.md
-docs/LocalObitStructuredData.md
+docs/LocalObitDocumentsInner.md
+docs/LocalObitMetadataInner.md
+docs/LocalObitStructuredDataInner.md
 docs/ObitApi.md
 docs/ObitDefinition.md
 docs/ObitDefinitionResponse.md
@@ -28,9 +28,9 @@ model_block_chain_obit_response.go
 model_client_obit.go
 model_client_obit_response.go
 model_local_obit.go
-model_local_obit_documents.go
-model_local_obit_metadata.go
-model_local_obit_structured_data.go
+model_local_obit_documents_inner.go
+model_local_obit_metadata_inner.go
+model_local_obit_structured_data_inner.go
 model_obit_definition.go
 model_obit_definition_response.go
 model_obit_did.go
