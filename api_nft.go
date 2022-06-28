@@ -21,30 +21,28 @@ import (
 )
 
 
-// ObitApiService ObitApi service
-type ObitApiService service
+// NFTApiService NFTApi service
+type NFTApiService service
 
-type ApiGetRequest struct {
+type ApiMintRequest struct {
 	ctx context.Context
-	ApiService *ObitApiService
+	ApiService *NFTApiService
 	key string
 }
 
-func (r ApiGetRequest) Execute() (*Obit, *http.Response, error) {
-	return r.ApiService.GetExecute(r)
+func (r ApiMintRequest) Execute() (*http.Response, error) {
+	return r.ApiService.MintExecute(r)
 }
 
 /*
-Get Get Obit by DID or USN
-
-Get a single Obit by given ObitDID or USN
+Mint Mints NFT
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param key The given ObitDID or USN argument
- @return ApiGetRequest
+ @return ApiMintRequest
 */
-func (a *ObitApiService) Get(ctx context.Context, key string) ApiGetRequest {
-	return ApiGetRequest{
+func (a *NFTApiService) Mint(ctx context.Context, key string) ApiMintRequest {
+	return ApiMintRequest{
 		ApiService: a,
 		ctx: ctx,
 		key: key,
@@ -52,21 +50,130 @@ func (a *ObitApiService) Get(ctx context.Context, key string) ApiGetRequest {
 }
 
 // Execute executes the request
-//  @return Obit
-func (a *ObitApiService) GetExecute(r ApiGetRequest) (*Obit, *http.Response, error) {
+func (a *NFTApiService) MintExecute(r ApiMintRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "NFTApiService.Mint")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/nft/{key}/mint"
+	localVarPath = strings.Replace(localVarPath, "{"+"key"+"}", url.PathEscape(parameterToString(r.key, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v NotFound
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v InternalServerError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiNftRequest struct {
+	ctx context.Context
+	ApiService *NFTApiService
+	key string
+}
+
+func (r ApiNftRequest) Execute() (*NFT, *http.Response, error) {
+	return r.ApiService.NftExecute(r)
+}
+
+/*
+Nft Fetch NFT from OBADA blockchain Node
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param key The given ObitDID or USN argument
+ @return ApiNftRequest
+*/
+func (a *NFTApiService) Nft(ctx context.Context, key string) ApiNftRequest {
+	return ApiNftRequest{
+		ApiService: a,
+		ctx: ctx,
+		key: key,
+	}
+}
+
+// Execute executes the request
+//  @return NFT
+func (a *NFTApiService) NftExecute(r ApiNftRequest) (*NFT, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *Obit
+		localVarReturnValue  *NFT
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ObitApiService.Get")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "NFTApiService.Nft")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/obits/{key}"
+	localVarPath := localBasePath + "/nft/{key}"
 	localVarPath = strings.Replace(localVarPath, "{"+"key"+"}", url.PathEscape(parameterToString(r.key, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -146,27 +253,31 @@ func (a *ObitApiService) GetExecute(r ApiGetRequest) (*Obit, *http.Response, err
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiHistoryRequest struct {
+type ApiSendRequest struct {
 	ctx context.Context
-	ApiService *ObitApiService
+	ApiService *NFTApiService
 	key string
+	sendNFTRequest *SendNFTRequest
 }
 
-func (r ApiHistoryRequest) Execute() (*History200Response, *http.Response, error) {
-	return r.ApiService.HistoryExecute(r)
+func (r ApiSendRequest) SendNFTRequest(sendNFTRequest SendNFTRequest) ApiSendRequest {
+	r.sendNFTRequest = &sendNFTRequest
+	return r
+}
+
+func (r ApiSendRequest) Execute() (*http.Response, error) {
+	return r.ApiService.SendExecute(r)
 }
 
 /*
-History Get Obit history by DID or USN
-
-Shows the history of changes by given Obit with ObitDID or USN
+Send Send NFT to another address
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param key The given ObitDID or USN argument
- @return ApiHistoryRequest
+ @return ApiSendRequest
 */
-func (a *ObitApiService) History(ctx context.Context, key string) ApiHistoryRequest {
-	return ApiHistoryRequest{
+func (a *NFTApiService) Send(ctx context.Context, key string) ApiSendRequest {
+	return ApiSendRequest{
 		ApiService: a,
 		ctx: ctx,
 		key: key,
@@ -174,21 +285,19 @@ func (a *ObitApiService) History(ctx context.Context, key string) ApiHistoryRequ
 }
 
 // Execute executes the request
-//  @return History200Response
-func (a *ObitApiService) HistoryExecute(r ApiHistoryRequest) (*History200Response, *http.Response, error) {
+func (a *NFTApiService) SendExecute(r ApiSendRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
+		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *History200Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ObitApiService.History")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "NFTApiService.Send")
 	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/obits/{key}/history"
+	localVarPath := localBasePath + "/nft/{key}/send"
 	localVarPath = strings.Replace(localVarPath, "{"+"key"+"}", url.PathEscape(parameterToString(r.key, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -196,121 +305,7 @@ func (a *ObitApiService) HistoryExecute(r ApiHistoryRequest) (*History200Respons
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 404 {
-			var v NotFound
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSaveRequest struct {
-	ctx context.Context
-	ApiService *ObitApiService
-	saveObitRequest *SaveObitRequest
-}
-
-func (r ApiSaveRequest) SaveObitRequest(saveObitRequest SaveObitRequest) ApiSaveRequest {
-	r.saveObitRequest = &saveObitRequest
-	return r
-}
-
-func (r ApiSaveRequest) Execute() (*Obit, *http.Response, error) {
-	return r.ApiService.SaveExecute(r)
-}
-
-/*
-Save Save Obit
-
-Returns Obit with updated checksum if data was changed.
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSaveRequest
-*/
-func (a *ObitApiService) Save(ctx context.Context) ApiSaveRequest {
-	return ApiSaveRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return Obit
-func (a *ObitApiService) SaveExecute(r ApiSaveRequest) (*Obit, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Obit
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ObitApiService.Save")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/obits"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json:"}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -327,22 +322,22 @@ func (a *ObitApiService) SaveExecute(r ApiSaveRequest) (*Obit, *http.Response, e
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.saveObitRequest
+	localVarPostBody = r.sendNFTRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return localVarReturnValue, nil, err
+		return nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
+		return localVarHTTPResponse, err
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
+		return localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -350,164 +345,27 @@ func (a *ObitApiService) SaveExecute(r ApiSaveRequest) (*Obit, *http.Response, e
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 422 {
-			var v UnprocessableEntity
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v NotFound
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
+				return localVarHTTPResponse, newErr
 			}
 			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
+			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v InternalServerError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
+				return localVarHTTPResponse, newErr
 			}
 			newErr.model = v
 		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
+		return localVarHTTPResponse, newErr
 	}
 
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSearchRequest struct {
-	ctx context.Context
-	ApiService *ObitApiService
-	q *string
-	offset *int32
-}
-
-// Query argument that used for a fulltext search
-func (r ApiSearchRequest) Q(q string) ApiSearchRequest {
-	r.q = &q
-	return r
-}
-
-// Number of records to skip for pagination.
-func (r ApiSearchRequest) Offset(offset int32) ApiSearchRequest {
-	r.offset = &offset
-	return r
-}
-
-func (r ApiSearchRequest) Execute() (*Obits, *http.Response, error) {
-	return r.ApiService.SearchExecute(r)
-}
-
-/*
-Search Search obits by query
-
-Implements a fulltext search for obits by "searchTerm".
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSearchRequest
-*/
-func (a *ObitApiService) Search(ctx context.Context) ApiSearchRequest {
-	return ApiSearchRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return Obits
-func (a *ObitApiService) SearchExecute(r ApiSearchRequest) (*Obits, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Obits
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ObitApiService.Search")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/obits"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.q != nil {
-		localVarQueryParams.Add("q", parameterToString(*r.q, ""))
-	}
-	if r.offset != nil {
-		localVarQueryParams.Add("offset", parameterToString(*r.offset, ""))
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 500 {
-			var v InternalServerError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
+	return localVarHTTPResponse, nil
 }

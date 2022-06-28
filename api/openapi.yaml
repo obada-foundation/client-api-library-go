@@ -1,241 +1,620 @@
-openapi: 3.0.1
+openapi: 3.0.2
 info:
   contact:
     email: techops@obada.io
     name: Obada Dev Team
     url: https://www.obada.io
   termsOfService: https://www.obada.io/terms/
-  title: OBADA Client Helper API
+  title: OBADA API
   version: 0.0.1
 servers:
-- url: /
+- description: OBADA Production API
+  url: http://obs.node.obada.io
+- description: OBADA Staging API
+  url: https://dev.node.obada.io
+security:
+- bearerAuth: []
 tags:
+- name: Accounts
+- name: NFT
 - name: Obit
+- name: Utils
 paths:
-  /api/obit/definition:
+  /accounts/my-balance:
     get:
-      description: "Returns the Obit Definition for a given device_id, part_number\
-        \ and serial_number input."
-      operationId: generateObitDef
+      operationId: balance
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountBalance'
+          description: Account balance response
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotAuthorized'
+          description: The request is not authorized.
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntity'
+          description: The submitted entity could not be processed.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+          description: Internal server error.
+      summary: Shows account balance of OBADA address
+      tags:
+      - Accounts
+  /accounts:
+    post:
+      description: "Creates a new account, using JWT uid as a internal user id"
+      operationId: createAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewAccountRequest'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+          description: Create new Account response
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotAuthorized'
+          description: The request is not authorized.
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntity'
+          description: The submitted entity could not be processed.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+          description: Internal server error.
+      summary: Creates a new Account
+      tags:
+      - Accounts
+  /obit/checksum:
+    post:
+      description: Generates Obit checksum and provides a log of generation details
+      operationId: generateChecksum
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenerateObitChecksumRequest'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerateObitChecksumResponse'
+          description: Obit checksum response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntity'
+          description: The submitted entity could not be processed.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+          description: Internal server error.
+      summary: Generates Obit checksum
+      tags:
+      - Utils
+  /obit/did:
+    post:
+      description: "Returns the Obit DID for a given device_id, part_number and serial_number\
+        \ input."
+      operationId: generateDID
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenerateObitDIDRequest'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerateObitDIDResponse'
+          description: Obit DID response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntity'
+          description: The submitted entity could not be processed.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+          description: Internal server error.
+      summary: Generate Obit DID
+      tags:
+      - Utils
+  /obits:
+    get:
+      description: Implements a fulltext search for obits by "searchTerm".
+      operationId: search
       parameters:
-      - description: Device Id (Required)
+      - description: Query argument that used for a fulltext search
         explode: true
         in: query
-        name: manufacturer
-        required: true
+        name: q
+        required: false
         schema:
-          example: Apple
+          example: fe403a1afe16203f4b8bb3a0e72d3e17567897bc15293e4a87b663e441030aea
           type: string
         style: form
-      - description: Part Number (Required)
+      - description: Number of records to skip for pagination.
         explode: true
         in: query
-        name: part_number
-        required: true
+        name: offset
+        required: false
         schema:
-          example: "123456789"
-          type: string
-        style: form
-      - description: Serial Number (Required)
-        explode: true
-        in: query
-        name: serial_number
-        required: true
-        schema:
-          example: "123456789"
-          type: string
+          default: 0
+          minimum: 0
+          type: integer
         style: form
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ObitDefinitionResponse'
-          description: Returns the Obit Definition
-      summary: Generate Obit Definition
+                $ref: '#/components/schemas/Obits'
+          description: List of obits with pagination responded by given arguments.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+          description: Internal server error.
+      summary: Search obits by query
       tags:
       - Obit
-  /api/client/obit/{obit_did}:
+    post:
+      description: Returns Obit with updated checksum if data was changed.
+      operationId: save
+      requestBody:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/SaveObitRequest'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Obit'
+          description: ""
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntity'
+          description: The submitted entity could not be processed.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+          description: Internal server error.
+      summary: Save Obit
+      tags:
+      - Obit
+  /obits/{key}:
     get:
-      description: ""
-      operationId: getClientObit
+      description: Get a single Obit by given ObitDID or USN
+      operationId: get
       parameters:
-      - description: Required.
+      - description: The given ObitDID or USN argument
         explode: false
         in: path
-        name: obit_did
+        name: key
         required: true
         schema:
-          example: did:obada:81413bc1ad2074a6ae35d1f65f64f1bca2e8a20959f37ef0349a729ddc567d9b
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientObitResponse'
-          description: Returns the obit saved on the client
-      summary: Get Client Obit
-      tags:
-      - Obit
-  /api/client/obit:
-    post:
-      description: ""
-      operationId: saveClientObit
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/LocalObit'
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientObitResponse'
-          description: Returns the obit that was saved
-      summary: Save Client Obit
-      tags:
-      - Obit
-  /api/obit/hash:
-    post:
-      description: ""
-      operationId: generateRootHash
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/LocalObit'
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RootHashResponse'
-          description: Returns the root hash
-      summary: Generates The Root Hash using the data provided.
-      tags:
-      - Obit
-  /api/server/obit/{obit_did}:
-    get:
-      description: Retrieves Obit information from blockchain but does not download
-        it.
-      operationId: fetchObitFromChain
-      parameters:
-      - description: Required.
-        explode: false
-        in: path
-        name: obit_did
-        required: true
-        schema:
-          example: did:obada:81413bc1ad2074a6ae35d1f65f64f1bca2e8a20959f37ef0349a729ddc567d9b
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BlockChainObitResponse'
-          description: Array with ObitDID and USN Information
-      summary: Get Obit From Blockchain
-      tags:
-      - Obit
-  /api/server/obit/upload:
-    post:
-      description: Uploads Obit from client to the Blockchain
-      operationId: uploadObit
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ObitDid'
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BaseResponse'
-          description: Returns a status of the operation
-      summary: Upload Obit to Blockchain
-      tags:
-      - Obit
-  /api/server/obit/download:
-    post:
-      description: Downloads the Obit information from the blockchain to the client.
-      operationId: downloadObitFromChain
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ObitDid'
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientObitResponse'
-          description: Returns the client obit downloaded from blockchain
-      summary: Download Obit from Blockchain
-      tags:
-      - Obit
-components:
-  schemas:
-    ObitDid:
-      example:
-        obit_did: did:obada:fe096095-e0f0-4918-9607-6567bd5756b5
-      properties:
-        obit_did:
-          description: OBADA decentralized identifier (max length Rohi?)
           example: did:obada:fe096095-e0f0-4918-9607-6567bd5756b5
-          maxLength: 256
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Obit'
+          description: ""
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+          description: The requested resource could not be found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+          description: Internal server error.
+      summary: Get Obit by DID or USN
+      tags:
+      - Obit
+  /obits/{key}/history:
+    get:
+      description: Shows the history of changes by given Obit with ObitDID or USN
+      operationId: history
+      parameters:
+      - description: The given ObitDID or USN argument
+        explode: false
+        in: path
+        name: key
+        required: true
+        schema:
+          example: did:obada:fe096095-e0f0-4918-9607-6567bd5756b5
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/history_200_response'
+          description: Collection of historical changes for given obit
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+          description: The requested resource could not be found.
+      summary: Get Obit history by DID or USN
+      tags:
+      - Obit
+  /nft/{key}:
+    get:
+      operationId: nft
+      parameters:
+      - description: The given ObitDID or USN argument
+        explode: false
+        in: path
+        name: key
+        required: true
+        schema:
+          example: did:obada:fe096095-e0f0-4918-9607-6567bd5756b5
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NFT'
+          description: NFT hosted by blockchain
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+          description: The requested resource could not be found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+          description: Internal server error.
+      summary: Fetch NFT from OBADA blockchain Node
+      tags:
+      - NFT
+  /nft/{key}/mint:
+    post:
+      operationId: Mint
+      parameters:
+      - description: The given ObitDID or USN argument
+        explode: false
+        in: path
+        name: key
+        required: true
+        schema:
+          example: did:obada:fe096095-e0f0-4918-9607-6567bd5756b5
+          type: string
+        style: simple
+      responses:
+        "201":
+          description: Succesfully minted
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+          description: The requested resource could not be found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+          description: Internal server error.
+      summary: Mints NFT
+      tags:
+      - NFT
+  /nft/{key}/send:
+    post:
+      operationId: send
+      parameters:
+      - description: The given ObitDID or USN argument
+        explode: false
+        in: path
+        name: key
+        required: true
+        schema:
+          example: did:obada:fe096095-e0f0-4918-9607-6567bd5756b5
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendNFTRequest'
+      responses:
+        "204":
+          description: Succesfully transfered
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+          description: The requested resource could not be found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+          description: Internal server error.
+      summary: Send NFT to another address
+      tags:
+      - NFT
+components:
+  responses:
+    AccountBalance:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountBalance'
+      description: Account balance response
+    NewAccountResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Account'
+      description: Create new Account response
+    Obit:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Obit'
+      description: ""
+    GenerateObitChecksumResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenerateObitChecksumResponse'
+      description: Obit checksum response
+    GenerateObitDIDResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenerateObitDIDResponse'
+      description: Obit DID response
+    ObitHistoryResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/history_200_response'
+      description: Collection of historical changes for given obit
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InternalServerError'
+      description: Internal server error.
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NotFound'
+      description: The requested resource could not be found.
+    NotAuthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NotAuthorized'
+      description: The request is not authorized.
+    UnprocessableEntity:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UnprocessableEntity'
+      description: The submitted entity could not be processed.
+  schemas:
+    NewAccountRequest:
+      description: New account create payload
+      example:
+        email: john.doe@obada.io
+      properties:
+        email:
+          description: "Account owner email, will be used for verification purpose"
+          example: john.doe@obada.io
           type: string
       required:
-      - obit_did
-    LocalObit:
+      - email
+      type: object
+    GenerateObitDIDRequest:
+      description: Generate Obit DID payload
       example:
-        owner: Tradeloop
-        metadata:
-        - value: Dell R740
-          key: model
-        - value: Dell R740
-          key: model
+        part_number: PN123456789
+        serial_number: SN123456789
+        manufacturer: Apple
+      properties:
+        manufacturer:
+          description: Manufacturer (Required)
+          example: Apple
+          type: string
+        part_number:
+          description: Part Number (Required)
+          example: PN123456789
+          type: string
+        serial_number:
+          description: Serial Number (Required)
+          example: SN123456789
+          type: string
+      required:
+      - manufacturer
+      - part_number
+      - serial_number
+      type: object
+    GenerateObitChecksumRequest:
+      description: Generate Obit checksum payload
+      example:
+        metadata_uri: http://somedomain.com/metadata
+        metadata_uri_hash: eac615cf446cad706b2364f974cbd3ec90620c52575aa1902418572f5a8d1fb5
+        part_number: PN123456789
+        serial_number: SN123456789
+        trust_anchor_token: eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NDc5NDEzNzksImlzcyI6ImFzY2lkaSIsInN1YiI6ImNkZDU1ZDIyLTI3NzAtNDk4Ny05YTI3LTNlNDg1ZDIzMjg1NCIsInZlcmlmeVVybCI6Imh0dHBzOi8vd3d3LmFzY2RpLmNvbS9hcGkvdjEvdmVyaWZ5In0.yEHMUUuJKFZYe04afAsPWEoX35ATb6JQj9aspY_yiY2W3HZKoKHq6rcUV02OL3hptZmByeC02yL-mkczbLLlCQ
+        manufacturer: Apple
+      properties:
+        manufacturer:
+          description: Manufacturer (Required)
+          example: Apple
+          type: string
+        part_number:
+          description: Part Number (Required)
+          example: PN123456789
+          type: string
+        serial_number:
+          description: Serial Number (Required)
+          example: SN123456789
+          type: string
+        metadata_uri:
+          description: Metadata URI
+          example: http://somedomain.com/metadata
+          type: string
+        metadata_uri_hash:
+          description: Metadata URI Hash
+          example: eac615cf446cad706b2364f974cbd3ec90620c52575aa1902418572f5a8d1fb5
+          type: string
+        trust_anchor_token:
+          description: Trust Token
+          example: eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NDc5NDEzNzksImlzcyI6ImFzY2lkaSIsInN1YiI6ImNkZDU1ZDIyLTI3NzAtNDk4Ny05YTI3LTNlNDg1ZDIzMjg1NCIsInZlcmlmeVVybCI6Imh0dHBzOi8vd3d3LmFzY2RpLmNvbS9hcGkvdjEvdmVyaWZ5In0.yEHMUUuJKFZYe04afAsPWEoX35ATb6JQj9aspY_yiY2W3HZKoKHq6rcUV02OL3hptZmByeC02yL-mkczbLLlCQ
+          type: string
+      required:
+      - manufacturer
+      - part_number
+      - serial_number
+      type: object
+    Obits:
+      description: Obits search response
+      example:
+        data:
+        - owner: did:obada:owner:123456
+          usn: 2zEz-xLJR
+          documents:
+          - encrypted: true
+            name: Link to device wipe report
+            uri: uri
+            hash: hash
+          - encrypted: true
+            name: Link to device wipe report
+            uri: uri
+            hash: hash
+          checksum: checksum
+          part_number: MWCN2LL/A
+          serial_number_hash: f6fc84c9f21c24907d6bee6eec38cabab5fa9a7be8c4a7827fe9e56f245bd2d5
+          trust_anchor_token: trust_anchor_token
+          did: did:obada:fe096095-e0f0-4918-9607-6567bd5756b5
+          manufacturer: Sony
+        - owner: did:obada:owner:123456
+          usn: 2zEz-xLJR
+          documents:
+          - encrypted: true
+            name: Link to device wipe report
+            uri: uri
+            hash: hash
+          - encrypted: true
+            name: Link to device wipe report
+            uri: uri
+            hash: hash
+          checksum: checksum
+          part_number: MWCN2LL/A
+          serial_number_hash: f6fc84c9f21c24907d6bee6eec38cabab5fa9a7be8c4a7827fe9e56f245bd2d5
+          trust_anchor_token: trust_anchor_token
+          did: did:obada:fe096095-e0f0-4918-9607-6567bd5756b5
+          manufacturer: Sony
+        meta:
+          per_page: 6
+          total: 0
+          last_page: 5
+          current_page: 1
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Obit'
+          type: array
+        meta:
+          $ref: '#/components/schemas/Obits_meta'
+      type: object
+    Obit:
+      description: OBADA record.
+      example:
+        owner: did:obada:owner:123456
+        usn: 2zEz-xLJR
         documents:
-        - name: Link to device wipe report
-          hashlink: Link to device wipe report
-        - name: Link to device wipe report
-          hashlink: Link to device wipe report
+        - encrypted: true
+          name: Link to device wipe report
+          uri: uri
+          hash: hash
+        - encrypted: true
+          name: Link to device wipe report
+          uri: uri
+          hash: hash
+        checksum: checksum
         part_number: MWCN2LL/A
-        serial_number: "123456789"
-        structured_data:
-        - value: "{\"somekey\":\"somevalue\"}"
-          key: model
-        - value: "{\"somekey\":\"somevalue\"}"
-          key: model
-        modified_at: 2020-01-01T13:24:35Z
-        obit_status: FUNCTIONAL
+        serial_number_hash: f6fc84c9f21c24907d6bee6eec38cabab5fa9a7be8c4a7827fe9e56f245bd2d5
+        trust_anchor_token: trust_anchor_token
+        did: did:obada:fe096095-e0f0-4918-9607-6567bd5756b5
         manufacturer: Sony
       properties:
+        did:
+          description: OBADA decentralized identifier
+          example: did:obada:fe096095-e0f0-4918-9607-6567bd5756b5
+          type: string
+        usn:
+          description: "Test An 8-12 character “URL Shortened” obit. Create the USN\
+            \ by Base(58) encoding the OBIT ID. Take the first 8 characters. Check\
+            \ for duplicates. With 16 million OBITs there is a 40% chance of collision.\
+            \ If so, add 4 characters. Repeat as necessary until a unique USN is generated.\n"
+          example: 2zEz-xLJR
+          type: string
         owner:
           description: Owner is the person/entity that owns the obit and the physical
-            asset it represents.
-          example: Tradeloop
-          type: string
-        obit_status:
-          description: |
-            Represent available Obit statuses:
-              - FUNCTIONAL
-              - NON_FUNCTIONAL
-              - DISPOSED
-              - STOLEN
-              - DISABLED_BY_OWNER
-          enum:
-          - FUNCTIONAL
-          - NON_FUNCTIONAL
-          - DISPOSED
-          - STOLEN
-          - DISABLED_BY_OWNER
+            asset it represents. Format is a DID like did:obada:owner:1234. However
+            in the current version only test numbers will be used.
+          example: did:obada:owner:123456
           type: string
         manufacturer:
           description: Waiting more specific details from Rohi
@@ -247,246 +626,369 @@ components:
             \ manufacturer. MWCN2LL/A (an iPhone 11 Pro, Silver, 256GB, model A2160)"
           example: MWCN2LL/A
           type: string
-        serial_number:
-          description: Serial Number
-          example: "123456789"
+        serial_number_hash:
+          description: Serial number hashed with sha256 hash function
+          example: f6fc84c9f21c24907d6bee6eec38cabab5fa9a7be8c4a7827fe9e56f245bd2d5
           type: string
-        metadata:
-          description: Get description from Rohi
-          items:
-            $ref: '#/components/schemas/LocalObit_metadata_inner'
-          type: array
+        trust_anchor_token:
+          description: JWT token from the trust anchor
+          type: string
         documents:
-          description: "To generate this link, take an SHA-256 hash of the document,\
-            \ and link to it as https://www.some-website.com?h1=hash-of-document.\
-            \ Note this does not yet adhere to the hashlink standard.\n"
+          description: Documents that are attached to Obit
           items:
-            $ref: '#/components/schemas/LocalObit_documents_inner'
+            $ref: '#/components/schemas/Document'
           type: array
-        structured_data:
-          description: Same as metadata but bigger. Key (string) => Value (string)
-            (hash per line sha256(key + value))
-          items:
-            $ref: '#/components/schemas/LocalObit_structured_data_inner'
-          type: array
-        modified_at:
-          example: 2020-01-01T13:24:35Z
-          format: date-time
+        checksum:
+          description: |
+            Hash calculated by SHA256 (previous Obit checksum + Obit data).
           type: string
       required:
       - manufacturer
-      - modified_at
-      - obit_status
-      - owner
       - part_number
       - serial_number
-    BaseResponse:
-      example:
-        status: 0
-      properties:
-        status:
-          type: integer
       type: object
-    BlockChainObitResponse:
+    ObitHistory:
+      description: New Obit request payload.
       example:
-        blockchain_obit:
-          root_hash: root_hash
-          obit_did: obit_did
-        status: 0
+        updated_at: 2020-01-01T13:24:35Z
+        old_values: "{}"
+        created_at: 2020-01-01T13:24:35Z
+        event: created
+        new_values: "{}"
+        obit_did: did:obada:fe096095-e0f0-4918-9607-6567bd5756b5
       properties:
-        status:
-          type: integer
-        blockchain_obit:
-          $ref: '#/components/schemas/BlockChainObit'
-      type: object
-    BlockChainObit:
-      example:
-        root_hash: root_hash
-        obit_did: obit_did
-      properties:
-        root_hash:
-          type: string
         obit_did:
+          description: OBADA decentralized identifier (max length Rohi?)
+          example: did:obada:fe096095-e0f0-4918-9607-6567bd5756b5
+          maxLength: 256
           type: string
-      type: object
-    ObitDefinitionResponse:
-      example:
-        obit:
-          usn: usn
-          usn_base58: usn_base58
-          serial_hash: serial_hash
-          obit_did: obit_did
-        status: 0
-      properties:
-        status:
-          type: integer
-        obit:
-          $ref: '#/components/schemas/ObitDefinition'
-      type: object
-    ObitDefinition:
-      example:
-        usn: usn
-        usn_base58: usn_base58
-        serial_hash: serial_hash
-        obit_did: obit_did
-      properties:
-        serial_hash:
+        event:
+          description: History event
+          example: created
           type: string
-        usn:
-          type: string
-        obit_did:
-          type: string
-        usn_base58:
-          type: string
-      type: object
-    ClientObitResponse:
-      example:
-        obit:
-          owner_did: owner_did
-          metadata: "{}"
-          documents: "{}"
-          root_hash: root_hash
-          serial_number_hash: serial_number_hash
-          obit_status: FUNCTIONAL
-          manufacturer: manufacturer
-          usn: usn
-          part_number: part_number
-          structured_data: "{}"
-          id: 6
-          modified_at: 2020-01-01T13:24:35Z
-          obit_did: obit_did
-        status: 0
-      properties:
-        status:
-          type: integer
-        obit:
-          $ref: '#/components/schemas/ClientObit'
-      type: object
-    ClientObit:
-      example:
-        owner_did: owner_did
-        metadata: "{}"
-        documents: "{}"
-        root_hash: root_hash
-        serial_number_hash: serial_number_hash
-        obit_status: FUNCTIONAL
-        manufacturer: manufacturer
-        usn: usn
-        part_number: part_number
-        structured_data: "{}"
-        id: 6
-        modified_at: 2020-01-01T13:24:35Z
-        obit_did: obit_did
-      properties:
-        id:
-          type: integer
-        obit_did:
-          type: string
-        usn:
-          type: string
-        owner_did:
-          type: string
-        obit_status:
-          description: |
-            Represent available Obit statuses:
-              - FUNCTIONAL
-              - NON_FUNCTIONAL
-              - DISPOSED
-              - STOLEN
-              - DISABLED_BY_OWNER
-          enum:
-          - FUNCTIONAL
-          - NON_FUNCTIONAL
-          - DISPOSED
-          - STOLEN
-          - DISABLED_BY_OWNER
-          type: string
-        manufacturer:
-          type: string
-        part_number:
-          type: string
-        serial_number_hash:
-          type: string
-        modified_at:
+        old_values:
+          type: object
+        new_values:
+          type: object
+        created_at:
           example: 2020-01-01T13:24:35Z
           format: date-time
           type: string
-        root_hash:
+        updated_at:
+          example: 2020-01-01T13:24:35Z
+          format: date-time
           type: string
-        metadata:
-          description: Get description from Rohi
-          type: object
+      type: object
+    SaveObitRequest:
+      description: Request to save Obit
+      example:
         documents:
-          description: "To generate this link, take an SHA-256 hash of the document,\
-            \ and link to it as https://www.some-website.com?h1=hash-of-document.\
-            \ Note this does not yet adhere to the hashlink standard.\n"
-          type: object
-        structured_data:
-          description: Same as metadata but bigger. Key (string) => Value (string)
-            (hash per line sha256(key + value))
-          type: object
-      type: object
-    RootHashResponse:
-      example:
-        root_hash: root_hash
-        status: 0
+        - name: Link to device wipe report
+          document_file: document_file
+          should_encrypt: true
+        - name: Link to device wipe report
+          document_file: document_file
+          should_encrypt: true
+        part_number: MWCN2LL/A
+        serial_number: f6fc84c9f21c24907d6bee6eec38cabab5fa9a7be8c4a7827fe9e56f245bd2d5
+        manufacturer: Sony
       properties:
-        status:
-          type: integer
-        root_hash:
+        manufacturer:
+          description: Waiting more specific details from Rohi
+          example: Sony
           type: string
+        part_number:
+          description: "Manufacturer provided. In cases where no part number is provided\
+            \ for the product, use model, or the most specific ID available from the\
+            \ manufacturer. MWCN2LL/A (an iPhone 11 Pro, Silver, 256GB, model A2160)"
+          example: MWCN2LL/A
+          type: string
+        serial_number:
+          description: Serial number hashed with sha256 hash function
+          example: f6fc84c9f21c24907d6bee6eec38cabab5fa9a7be8c4a7827fe9e56f245bd2d5
+          type: string
+        documents:
+          items:
+            $ref: '#/components/schemas/DeviceDocument'
+          type: array
+      required:
+      - manufacturer
+      - part_number
+      - serial_number
       type: object
-    LocalObit_metadata_inner:
-      description: A record that represent key/value metadata record
+    NFT:
+      description: OBADA NFT
       example:
-        value: Dell R740
-        key: model
+        data:
+          usn: usn
+          documents:
+          - name: name
+            uri: uri
+            hash: hash
+          - name: name
+            uri: uri
+            hash: hash
+          checksum: checksum
+          trust_anchor_token: trust_anchor_token
+        class_id: class_id
+        uri_hash: uri_hash
+        id: id
+        uri: uri
       properties:
-        key:
-          description: Metadata key
-          example: model
+        class_id:
           type: string
-        value:
-          description: Matadata value
-          example: Dell R740
+        id:
+          type: string
+        uri:
+          type: string
+        uri_hash:
+          type: string
+        data:
+          $ref: '#/components/schemas/NFT_data'
+      type: object
+    SendNFTRequest:
+      description: Transfer NFT payload
+      example:
+        receiver: receiver
+      properties:
+        receiver:
+          description: OBADA blockchain receiver address
           type: string
       required:
-      - key
-      - value
+      - receiver
       type: object
-    LocalObit_documents_inner:
+    AccountBalance:
+      description: OBADA Account balance
+      example:
+        address: address
+        balance: 0
+      properties:
+        address:
+          type: string
+        balance:
+          format: int64
+          type: integer
+      type: object
+    NotAuthorized:
+      description: A typical 401 error.
+      properties:
+        error:
+          default: Not authorized
+          type: string
+      type: object
+    UnprocessableEntity:
+      description: A typical 422 error.
+      properties:
+        error:
+          default: data validation error
+          type: string
+        fields:
+          items:
+            $ref: '#/components/schemas/UnprocessableEntity_fields_inner'
+          type: array
+      type: object
+    InternalServerError:
+      description: A typical 500 error.
+      properties:
+        error:
+          default: Internal Server Error
+          type: string
+      type: object
+    Account:
+      description: ClientHelper account
+      example:
+        id: id
+        email: john.doe@obada.io
+      properties:
+        id:
+          description: Account owner id
+          type: string
+        email:
+          description: "Account owner email, will be used for verification purpose"
+          example: john.doe@obada.io
+          type: string
+      required:
+      - email
+      type: object
+    GenerateObitChecksumResponse:
+      description: Obit checksum with logged data
+      example:
+        checksum: ""
+        compute_log: ""
+      properties:
+        checksum:
+          description: Obit checksum
+          example: ""
+          type: string
+        compute_log:
+          description: Log that contain captures from SDK
+          example: ""
+          type: string
+      type: object
+    GenerateObitDIDResponse:
+      description: Returns steps that used for DID generation
+      example:
+        usn: ""
+        usn_base58: ""
+        serial_number_hash: ""
+        did: ""
+      properties:
+        serial_number_hash:
+          description: Serial Number Hash is sha256 of the Serial Number input
+          example: ""
+          type: string
+        usn:
+          description: Universal Serial Number
+          example: ""
+          type: string
+        did:
+          description: DID
+          example: ""
+          type: string
+        usn_base58:
+          description: Base58
+          example: ""
+          type: string
+      type: object
+    Document:
       description: Document hashlink
       example:
+        encrypted: true
         name: Link to device wipe report
-        hashlink: Link to device wipe report
+        uri: uri
+        hash: hash
       properties:
         name:
-          description: Associative name of hashlink
+          description: Associative name of file
           example: Link to device wipe report
           type: string
-        hashlink:
-          description: Hashlink
+        uri:
+          description: Link to the document
+          type: string
+        hash:
+          description: Hash of the file
+          type: string
+        encrypted:
+          description: If true then client helper will encrypt document with account
+            key
+          type: boolean
+      type: object
+    NotFound:
+      description: A typical 404 error.
+      properties:
+        error:
+          default: Not found
+          type: string
+      type: object
+    DeviceDocument:
+      description: Device Document
+      example:
+        name: Link to device wipe report
+        document_file: document_file
+        should_encrypt: true
+      properties:
+        name:
+          description: Associative name of device document
           example: Link to device wipe report
           type: string
+        document_file:
+          format: base64
+          type: string
+        should_encrypt:
+          default: true
+          description: If true then client helper will encrypt document with account
+            key
+          type: boolean
       required:
-      - hashlink
+      - document_file
       - name
       type: object
-    LocalObit_structured_data_inner:
-      description: A record that represent key/value structure data record
+    NFTDocument:
+      description: OBADA NFT document
       example:
-        value: "{\"somekey\":\"somevalue\"}"
-        key: model
+        name: name
+        uri: uri
+        hash: hash
       properties:
-        key:
-          description: Structure data key
-          example: model
+        name:
           type: string
-        value:
-          description: Structure data value as a json string
-          example: "{\"somekey\":\"somevalue\"}"
+        uri:
           type: string
-      required:
-      - key
-      - value
+        hash:
+          type: string
       type: object
+    history_200_response:
+      example:
+        data:
+        - updated_at: 2020-01-01T13:24:35Z
+          old_values: "{}"
+          created_at: 2020-01-01T13:24:35Z
+          event: created
+          new_values: "{}"
+          obit_did: did:obada:fe096095-e0f0-4918-9607-6567bd5756b5
+        - updated_at: 2020-01-01T13:24:35Z
+          old_values: "{}"
+          created_at: 2020-01-01T13:24:35Z
+          event: created
+          new_values: "{}"
+          obit_did: did:obada:fe096095-e0f0-4918-9607-6567bd5756b5
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ObitHistory'
+          type: array
+      type: object
+    Obits_meta:
+      example:
+        per_page: 6
+        total: 0
+        last_page: 5
+        current_page: 1
+      properties:
+        total:
+          type: integer
+        per_page:
+          type: integer
+        current_page:
+          type: integer
+        last_page:
+          type: integer
+      type: object
+    NFT_data:
+      example:
+        usn: usn
+        documents:
+        - name: name
+          uri: uri
+          hash: hash
+        - name: name
+          uri: uri
+          hash: hash
+        checksum: checksum
+        trust_anchor_token: trust_anchor_token
+      properties:
+        trust_anchor_token:
+          type: string
+        usn:
+          type: string
+        checksum:
+          type: string
+        documents:
+          items:
+            $ref: '#/components/schemas/NFTDocument'
+          type: array
+      type: object
+    UnprocessableEntity_fields_inner:
+      properties:
+        field:
+          default: serial_number
+          type: string
+        error:
+          default: serial_number is required field
+          type: string
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http

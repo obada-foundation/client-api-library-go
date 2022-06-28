@@ -1,90 +1,21 @@
 # \ObitApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *http://obs.node.obada.io*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**DownloadObitFromChain**](ObitApi.md#DownloadObitFromChain) | **Post** /api/server/obit/download | Download Obit from Blockchain
-[**FetchObitFromChain**](ObitApi.md#FetchObitFromChain) | **Get** /api/server/obit/{obit_did} | Get Obit From Blockchain
-[**GenerateObitDef**](ObitApi.md#GenerateObitDef) | **Get** /api/obit/definition | Generate Obit Definition
-[**GenerateRootHash**](ObitApi.md#GenerateRootHash) | **Post** /api/obit/hash | Generates The Root Hash using the data provided.
-[**GetClientObit**](ObitApi.md#GetClientObit) | **Get** /api/client/obit/{obit_did} | Get Client Obit
-[**SaveClientObit**](ObitApi.md#SaveClientObit) | **Post** /api/client/obit | Save Client Obit
-[**UploadObit**](ObitApi.md#UploadObit) | **Post** /api/server/obit/upload | Upload Obit to Blockchain
+[**Get**](ObitApi.md#Get) | **Get** /obits/{key} | Get Obit by DID or USN
+[**History**](ObitApi.md#History) | **Get** /obits/{key}/history | Get Obit history by DID or USN
+[**Save**](ObitApi.md#Save) | **Post** /obits | Save Obit
+[**Search**](ObitApi.md#Search) | **Get** /obits | Search obits by query
 
 
 
-## DownloadObitFromChain
+## Get
 
-> ClientObitResponse DownloadObitFromChain(ctx).ObitDid(obitDid).Execute()
+> Obit Get(ctx, key).Execute()
 
-Download Obit from Blockchain
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "./openapi"
-)
-
-func main() {
-    obitDid := *openapiclient.NewObitDid("did:obada:fe096095-e0f0-4918-9607-6567bd5756b5") // ObitDid |  (optional)
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ObitApi.DownloadObitFromChain(context.Background()).ObitDid(obitDid).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ObitApi.DownloadObitFromChain``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `DownloadObitFromChain`: ClientObitResponse
-    fmt.Fprintf(os.Stdout, "Response from `ObitApi.DownloadObitFromChain`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiDownloadObitFromChainRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **obitDid** | [**ObitDid**](ObitDid.md) |  | 
-
-### Return type
-
-[**ClientObitResponse**](ClientObitResponse.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## FetchObitFromChain
-
-> BlockChainObitResponse FetchObitFromChain(ctx, obitDid).Execute()
-
-Get Obit From Blockchain
+Get Obit by DID or USN
 
 
 
@@ -101,17 +32,17 @@ import (
 )
 
 func main() {
-    obitDid := "did:obada:81413bc1ad2074a6ae35d1f65f64f1bca2e8a20959f37ef0349a729ddc567d9b" // string | Required.
+    key := "did:obada:fe096095-e0f0-4918-9607-6567bd5756b5" // string | The given ObitDID or USN argument
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ObitApi.FetchObitFromChain(context.Background(), obitDid).Execute()
+    resp, r, err := apiClient.ObitApi.Get(context.Background(), key).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ObitApi.FetchObitFromChain``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `ObitApi.Get``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `FetchObitFromChain`: BlockChainObitResponse
-    fmt.Fprintf(os.Stdout, "Response from `ObitApi.FetchObitFromChain`: %v\n", resp)
+    // response from `Get`: Obit
+    fmt.Fprintf(os.Stdout, "Response from `ObitApi.Get`: %v\n", resp)
 }
 ```
 
@@ -121,11 +52,11 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**obitDid** | **string** | Required. | 
+**key** | **string** | The given ObitDID or USN argument | 
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiFetchObitFromChainRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiGetRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -134,11 +65,11 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**BlockChainObitResponse**](BlockChainObitResponse.md)
+[**Obit**](Obit.md)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -150,148 +81,11 @@ No authorization required
 [[Back to README]](../README.md)
 
 
-## GenerateObitDef
+## History
 
-> ObitDefinitionResponse GenerateObitDef(ctx).Manufacturer(manufacturer).PartNumber(partNumber).SerialNumber(serialNumber).Execute()
+> History200Response History(ctx, key).Execute()
 
-Generate Obit Definition
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "./openapi"
-)
-
-func main() {
-    manufacturer := "Apple" // string | Device Id (Required)
-    partNumber := "123456789" // string | Part Number (Required)
-    serialNumber := "123456789" // string | Serial Number (Required)
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ObitApi.GenerateObitDef(context.Background()).Manufacturer(manufacturer).PartNumber(partNumber).SerialNumber(serialNumber).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ObitApi.GenerateObitDef``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GenerateObitDef`: ObitDefinitionResponse
-    fmt.Fprintf(os.Stdout, "Response from `ObitApi.GenerateObitDef`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiGenerateObitDefRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **manufacturer** | **string** | Device Id (Required) | 
- **partNumber** | **string** | Part Number (Required) | 
- **serialNumber** | **string** | Serial Number (Required) | 
-
-### Return type
-
-[**ObitDefinitionResponse**](ObitDefinitionResponse.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## GenerateRootHash
-
-> RootHashResponse GenerateRootHash(ctx).LocalObit(localObit).Execute()
-
-Generates The Root Hash using the data provided.
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    "time"
-    openapiclient "./openapi"
-)
-
-func main() {
-    localObit := *openapiclient.NewLocalObit("Tradeloop", "ObitStatus_example", "Sony", "MWCN2LL/A", "123456789", time.Now()) // LocalObit |  (optional)
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ObitApi.GenerateRootHash(context.Background()).LocalObit(localObit).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ObitApi.GenerateRootHash``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GenerateRootHash`: RootHashResponse
-    fmt.Fprintf(os.Stdout, "Response from `ObitApi.GenerateRootHash`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiGenerateRootHashRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **localObit** | [**LocalObit**](LocalObit.md) |  | 
-
-### Return type
-
-[**RootHashResponse**](RootHashResponse.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## GetClientObit
-
-> ClientObitResponse GetClientObit(ctx, obitDid).Execute()
-
-Get Client Obit
+Get Obit history by DID or USN
 
 
 
@@ -308,17 +102,17 @@ import (
 )
 
 func main() {
-    obitDid := "did:obada:81413bc1ad2074a6ae35d1f65f64f1bca2e8a20959f37ef0349a729ddc567d9b" // string | Required.
+    key := "did:obada:fe096095-e0f0-4918-9607-6567bd5756b5" // string | The given ObitDID or USN argument
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ObitApi.GetClientObit(context.Background(), obitDid).Execute()
+    resp, r, err := apiClient.ObitApi.History(context.Background(), key).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ObitApi.GetClientObit``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `ObitApi.History``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `GetClientObit`: ClientObitResponse
-    fmt.Fprintf(os.Stdout, "Response from `ObitApi.GetClientObit`: %v\n", resp)
+    // response from `History`: History200Response
+    fmt.Fprintf(os.Stdout, "Response from `ObitApi.History`: %v\n", resp)
 }
 ```
 
@@ -328,11 +122,11 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**obitDid** | **string** | Required. | 
+**key** | **string** | The given ObitDID or USN argument | 
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiGetClientObitRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiHistoryRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -341,11 +135,11 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ClientObitResponse**](ClientObitResponse.md)
+[**History200Response**](History200Response.md)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -357,11 +151,11 @@ No authorization required
 [[Back to README]](../README.md)
 
 
-## SaveClientObit
+## Save
 
-> ClientObitResponse SaveClientObit(ctx).LocalObit(localObit).Execute()
+> Obit Save(ctx).SaveObitRequest(saveObitRequest).Execute()
 
-Save Client Obit
+Save Obit
 
 
 
@@ -374,22 +168,21 @@ import (
     "context"
     "fmt"
     "os"
-    "time"
     openapiclient "./openapi"
 )
 
 func main() {
-    localObit := *openapiclient.NewLocalObit("Tradeloop", "ObitStatus_example", "Sony", "MWCN2LL/A", "123456789", time.Now()) // LocalObit |  (optional)
+    saveObitRequest := *openapiclient.NewSaveObitRequest("Sony", "MWCN2LL/A", "f6fc84c9f21c24907d6bee6eec38cabab5fa9a7be8c4a7827fe9e56f245bd2d5") // SaveObitRequest |  (optional)
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ObitApi.SaveClientObit(context.Background()).LocalObit(localObit).Execute()
+    resp, r, err := apiClient.ObitApi.Save(context.Background()).SaveObitRequest(saveObitRequest).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ObitApi.SaveClientObit``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `ObitApi.Save``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `SaveClientObit`: ClientObitResponse
-    fmt.Fprintf(os.Stdout, "Response from `ObitApi.SaveClientObit`: %v\n", resp)
+    // response from `Save`: Obit
+    fmt.Fprintf(os.Stdout, "Response from `ObitApi.Save`: %v\n", resp)
 }
 ```
 
@@ -399,24 +192,24 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiSaveClientObitRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiSaveRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **localObit** | [**LocalObit**](LocalObit.md) |  | 
+ **saveObitRequest** | [**SaveObitRequest**](SaveObitRequest.md) |  | 
 
 ### Return type
 
-[**ClientObitResponse**](ClientObitResponse.md)
+[**Obit**](Obit.md)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
-- **Content-Type**: application/json
+- **Content-Type**: application/json:
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -424,11 +217,11 @@ No authorization required
 [[Back to README]](../README.md)
 
 
-## UploadObit
+## Search
 
-> BaseResponse UploadObit(ctx).ObitDid(obitDid).Execute()
+> Obits Search(ctx).Q(q).Offset(offset).Execute()
 
-Upload Obit to Blockchain
+Search obits by query
 
 
 
@@ -445,17 +238,18 @@ import (
 )
 
 func main() {
-    obitDid := *openapiclient.NewObitDid("did:obada:fe096095-e0f0-4918-9607-6567bd5756b5") // ObitDid |  (optional)
+    q := "fe403a1afe16203f4b8bb3a0e72d3e17567897bc15293e4a87b663e441030aea" // string | Query argument that used for a fulltext search (optional)
+    offset := int32(56) // int32 | Number of records to skip for pagination. (optional) (default to 0)
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ObitApi.UploadObit(context.Background()).ObitDid(obitDid).Execute()
+    resp, r, err := apiClient.ObitApi.Search(context.Background()).Q(q).Offset(offset).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ObitApi.UploadObit``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `ObitApi.Search``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `UploadObit`: BaseResponse
-    fmt.Fprintf(os.Stdout, "Response from `ObitApi.UploadObit`: %v\n", resp)
+    // response from `Search`: Obits
+    fmt.Fprintf(os.Stdout, "Response from `ObitApi.Search`: %v\n", resp)
 }
 ```
 
@@ -465,24 +259,25 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiUploadObitRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiSearchRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **obitDid** | [**ObitDid**](ObitDid.md) |  | 
+ **q** | **string** | Query argument that used for a fulltext search | 
+ **offset** | **int32** | Number of records to skip for pagination. | [default to 0]
 
 ### Return type
 
-[**BaseResponse**](BaseResponse.md)
+[**Obits**](Obits.md)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
-- **Content-Type**: application/json
+- **Content-Type**: Not defined
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

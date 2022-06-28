@@ -75,39 +75,65 @@ ctx = context.WithValue(context.Background(), github.com/obada-foundation/client
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *http://obs.node.obada.io*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*ObitApi* | [**DownloadObitFromChain**](docs/ObitApi.md#downloadobitfromchain) | **Post** /api/server/obit/download | Download Obit from Blockchain
-*ObitApi* | [**FetchObitFromChain**](docs/ObitApi.md#fetchobitfromchain) | **Get** /api/server/obit/{obit_did} | Get Obit From Blockchain
-*ObitApi* | [**GenerateObitDef**](docs/ObitApi.md#generateobitdef) | **Get** /api/obit/definition | Generate Obit Definition
-*ObitApi* | [**GenerateRootHash**](docs/ObitApi.md#generateroothash) | **Post** /api/obit/hash | Generates The Root Hash using the data provided.
-*ObitApi* | [**GetClientObit**](docs/ObitApi.md#getclientobit) | **Get** /api/client/obit/{obit_did} | Get Client Obit
-*ObitApi* | [**SaveClientObit**](docs/ObitApi.md#saveclientobit) | **Post** /api/client/obit | Save Client Obit
-*ObitApi* | [**UploadObit**](docs/ObitApi.md#uploadobit) | **Post** /api/server/obit/upload | Upload Obit to Blockchain
+*AccountsApi* | [**Balance**](docs/AccountsApi.md#balance) | **Get** /accounts/my-balance | Shows account balance of OBADA address
+*AccountsApi* | [**CreateAccount**](docs/AccountsApi.md#createaccount) | **Post** /accounts | Creates a new Account
+*NFTApi* | [**Mint**](docs/NFTApi.md#mint) | **Post** /nft/{key}/mint | Mints NFT
+*NFTApi* | [**Nft**](docs/NFTApi.md#nft) | **Get** /nft/{key} | Fetch NFT from OBADA blockchain Node
+*NFTApi* | [**Send**](docs/NFTApi.md#send) | **Post** /nft/{key}/send | Send NFT to another address
+*ObitApi* | [**Get**](docs/ObitApi.md#get) | **Get** /obits/{key} | Get Obit by DID or USN
+*ObitApi* | [**History**](docs/ObitApi.md#history) | **Get** /obits/{key}/history | Get Obit history by DID or USN
+*ObitApi* | [**Save**](docs/ObitApi.md#save) | **Post** /obits | Save Obit
+*ObitApi* | [**Search**](docs/ObitApi.md#search) | **Get** /obits | Search obits by query
+*UtilsApi* | [**GenerateChecksum**](docs/UtilsApi.md#generatechecksum) | **Post** /obit/checksum | Generates Obit checksum
+*UtilsApi* | [**GenerateDID**](docs/UtilsApi.md#generatedid) | **Post** /obit/did | Generate Obit DID
 
 
 ## Documentation For Models
 
- - [BaseResponse](docs/BaseResponse.md)
- - [BlockChainObit](docs/BlockChainObit.md)
- - [BlockChainObitResponse](docs/BlockChainObitResponse.md)
- - [ClientObit](docs/ClientObit.md)
- - [ClientObitResponse](docs/ClientObitResponse.md)
- - [LocalObit](docs/LocalObit.md)
- - [LocalObitDocumentsInner](docs/LocalObitDocumentsInner.md)
- - [LocalObitMetadataInner](docs/LocalObitMetadataInner.md)
- - [LocalObitStructuredDataInner](docs/LocalObitStructuredDataInner.md)
- - [ObitDefinition](docs/ObitDefinition.md)
- - [ObitDefinitionResponse](docs/ObitDefinitionResponse.md)
- - [ObitDid](docs/ObitDid.md)
- - [RootHashResponse](docs/RootHashResponse.md)
+ - [Account](docs/Account.md)
+ - [AccountBalance](docs/AccountBalance.md)
+ - [DeviceDocument](docs/DeviceDocument.md)
+ - [Document](docs/Document.md)
+ - [GenerateObitChecksumRequest](docs/GenerateObitChecksumRequest.md)
+ - [GenerateObitChecksumResponse](docs/GenerateObitChecksumResponse.md)
+ - [GenerateObitDIDRequest](docs/GenerateObitDIDRequest.md)
+ - [GenerateObitDIDResponse](docs/GenerateObitDIDResponse.md)
+ - [History200Response](docs/History200Response.md)
+ - [InternalServerError](docs/InternalServerError.md)
+ - [NFT](docs/NFT.md)
+ - [NFTData](docs/NFTData.md)
+ - [NFTDocument](docs/NFTDocument.md)
+ - [NewAccountRequest](docs/NewAccountRequest.md)
+ - [NotAuthorized](docs/NotAuthorized.md)
+ - [NotFound](docs/NotFound.md)
+ - [Obit](docs/Obit.md)
+ - [ObitHistory](docs/ObitHistory.md)
+ - [Obits](docs/Obits.md)
+ - [ObitsMeta](docs/ObitsMeta.md)
+ - [SaveObitRequest](docs/SaveObitRequest.md)
+ - [SendNFTRequest](docs/SendNFTRequest.md)
+ - [UnprocessableEntity](docs/UnprocessableEntity.md)
+ - [UnprocessableEntityFieldsInner](docs/UnprocessableEntityFieldsInner.md)
 
 
 ## Documentation For Authorization
 
- Endpoints do not require authorization.
+
+
+### bearerAuth
+
+- **Type**: HTTP Bearer token authentication
+
+Example
+
+```golang
+auth := context.WithValue(context.Background(), sw.ContextAccessToken, "BEARER_TOKEN_STRING")
+r, err := client.Service.Operation(auth, args)
+```
 
 
 ## Documentation for Utility Methods
