@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** | Associative name of device document | 
 **DocumentFile** | **string** |  | 
-**ShouldEncrypt** | Pointer to **bool** | If true then client helper will encrypt document with account key | [optional] [default to true]
+**ShouldEncrypt** | Pointer to **bool** | If true then client helper will encrypt document with account key | [optional] [default to false]
 
 ## Methods
 

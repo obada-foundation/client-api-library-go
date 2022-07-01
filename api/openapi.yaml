@@ -685,10 +685,10 @@ components:
         documents:
         - name: Link to device wipe report
           document_file: document_file
-          should_encrypt: true
+          should_encrypt: false
         - name: Link to device wipe report
           document_file: document_file
-          should_encrypt: true
+          should_encrypt: false
         part_number: MWCN2LL/A
         serial_number: f6fc84c9f21c24907d6bee6eec38cabab5fa9a7be8c4a7827fe9e56f245bd2d5
         manufacturer: Sony
@@ -885,7 +885,7 @@ components:
       example:
         name: Link to device wipe report
         document_file: document_file
-        should_encrypt: true
+        should_encrypt: false
       properties:
         name:
           description: Associative name of device document
@@ -895,7 +895,7 @@ components:
           format: base64
           type: string
         should_encrypt:
-          default: true
+          default: false
           description: If true then client helper will encrypt document with account
             key
           type: boolean

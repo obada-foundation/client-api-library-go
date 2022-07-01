@@ -32,7 +32,7 @@ func NewDeviceDocument(name string, documentFile string) *DeviceDocument {
 	this := DeviceDocument{}
 	this.Name = name
 	this.DocumentFile = documentFile
-	var shouldEncrypt bool = true
+	var shouldEncrypt bool = false
 	this.ShouldEncrypt = &shouldEncrypt
 	return &this
 }
@@ -42,7 +42,7 @@ func NewDeviceDocument(name string, documentFile string) *DeviceDocument {
 // but it doesn't guarantee that properties required by API are set
 func NewDeviceDocumentWithDefaults() *DeviceDocument {
 	this := DeviceDocument{}
-	var shouldEncrypt bool = true
+	var shouldEncrypt bool = false
 	this.ShouldEncrypt = &shouldEncrypt
 	return &this
 }
