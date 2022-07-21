@@ -353,6 +353,37 @@ paths:
       summary: Mints NFT
       tags:
       - NFT
+  /nft/{key}/metadata:
+    post:
+      operationId: UpdateMetadata
+      parameters:
+      - description: The given ObitDID or USN argument
+        explode: false
+        in: path
+        name: key
+        required: true
+        schema:
+          example: did:obada:fe096095-e0f0-4918-9607-6567bd5756b5
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: Metadata succesfully updated
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+          description: The requested resource could not be found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+          description: Internal server error.
+      summary: Update NFT metadata
+      tags:
+      - NFT
   /nft/{key}/send:
     post:
       operationId: send

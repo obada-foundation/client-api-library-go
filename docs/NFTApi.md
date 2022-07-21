@@ -7,6 +7,7 @@ Method | HTTP request | Description
 [**Mint**](NFTApi.md#Mint) | **Post** /nft/{key}/mint | Mints NFT
 [**Nft**](NFTApi.md#Nft) | **Get** /nft/{key} | Fetch NFT from OBADA blockchain Node
 [**Send**](NFTApi.md#Send) | **Post** /nft/{key}/send | Send NFT to another address
+[**UpdateMetadata**](NFTApi.md#UpdateMetadata) | **Post** /nft/{key}/metadata | Update NFT metadata
 
 
 
@@ -205,6 +206,72 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateMetadata
+
+> UpdateMetadata(ctx, key).Execute()
+
+Update NFT metadata
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    key := "did:obada:fe096095-e0f0-4918-9607-6567bd5756b5" // string | The given ObitDID or USN argument
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.NFTApi.UpdateMetadata(context.Background(), key).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `NFTApi.UpdateMetadata``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**key** | **string** | The given ObitDID or USN argument | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateMetadataRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
