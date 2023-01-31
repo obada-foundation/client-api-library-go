@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **PartNumber** | **string** | Manufacturer provided. In cases where no part number is provided for the product, use model, or the most specific ID available from the manufacturer. MWCN2LL/A (an iPhone 11 Pro, Silver, 256GB, model A2160) | 
 **SerialNumber** | **string** | Serial number hashed with sha256 hash function | 
 **Documents** | Pointer to [**[]DeviceDocument**](DeviceDocument.md) |  | [optional] 
+**Address** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -112,6 +113,31 @@ SetDocuments sets Documents field to given value.
 `func (o *SaveObitRequest) HasDocuments() bool`
 
 HasDocuments returns a boolean if a field has been set.
+
+### GetAddress
+
+`func (o *SaveObitRequest) GetAddress() string`
+
+GetAddress returns the Address field if non-nil, zero value otherwise.
+
+### GetAddressOk
+
+`func (o *SaveObitRequest) GetAddressOk() (*string, bool)`
+
+GetAddressOk returns a tuple with the Address field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAddress
+
+`func (o *SaveObitRequest) SetAddress(v string)`
+
+SetAddress sets Address field to given value.
+
+### HasAddress
+
+`func (o *SaveObitRequest) HasAddress() bool`
+
+HasAddress returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

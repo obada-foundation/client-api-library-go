@@ -1,46 +1,46 @@
-# NewAccountRequest
+# RegisterRequest
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Email** | **string** | Account owner email, will be used for verification purpose | 
+**Email** | **string** | Profile owner email, will be used for verification purpose | 
 
 ## Methods
 
-### NewNewAccountRequest
+### NewRegisterRequest
 
-`func NewNewAccountRequest(email string, ) *NewAccountRequest`
+`func NewRegisterRequest(email string, ) *RegisterRequest`
 
-NewNewAccountRequest instantiates a new NewAccountRequest object
+NewRegisterRequest instantiates a new RegisterRequest object
 This constructor will assign default values to properties that have it defined,
 and makes sure properties required by API are set, but the set of arguments
 will change when the set of required properties is changed
 
-### NewNewAccountRequestWithDefaults
+### NewRegisterRequestWithDefaults
 
-`func NewNewAccountRequestWithDefaults() *NewAccountRequest`
+`func NewRegisterRequestWithDefaults() *RegisterRequest`
 
-NewNewAccountRequestWithDefaults instantiates a new NewAccountRequest object
+NewRegisterRequestWithDefaults instantiates a new RegisterRequest object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
 ### GetEmail
 
-`func (o *NewAccountRequest) GetEmail() string`
+`func (o *RegisterRequest) GetEmail() string`
 
 GetEmail returns the Email field if non-nil, zero value otherwise.
 
 ### GetEmailOk
 
-`func (o *NewAccountRequest) GetEmailOk() (*string, bool)`
+`func (o *RegisterRequest) GetEmailOk() (*string, bool)`
 
 GetEmailOk returns a tuple with the Email field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetEmail
 
-`func (o *NewAccountRequest) SetEmail(v string)`
+`func (o *RegisterRequest) SetEmail(v string)`
 
 SetEmail sets Email field to given value.
 

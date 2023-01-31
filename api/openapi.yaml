@@ -17,9 +17,236 @@ security:
 tags:
 - name: Accounts
 - name: NFT
+- name: Keys
 - name: Obit
 - name: Utils
 paths:
+  /accounts/{address}:
+    get:
+      operationId: account
+      parameters:
+      - description: OBADA address
+        explode: false
+        in: path
+        name: address
+        required: true
+        schema:
+          example: obada1yxxnd624tgwqm3eyv5smdvjrrydfh9h943qptg
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+          description: Returns OBADA account
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotAuthorized'
+          description: The request is not authorized.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+          description: Internal server error.
+      summary: Fetches an information about single account
+      tags:
+      - Accounts
+    post:
+      operationId: updateAccount
+      parameters:
+      - description: OBADA address
+        explode: false
+        in: path
+        name: address
+        required: true
+        schema:
+          example: obada1yxxnd624tgwqm3eyv5smdvjrrydfh9h943qptg
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountRequest'
+      responses:
+        "201":
+          description: Account was updated
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntity'
+          description: The submitted entity could not be processed.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotAuthorized'
+          description: The request is not authorized.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+          description: Internal server error.
+      summary: Sets account specific information
+      tags:
+      - Accounts
+  /accounts/{address}/send-coins:
+    post:
+      operationId: sendCoins
+      parameters:
+      - description: OBADA address
+        explode: false
+        in: path
+        name: address
+        required: true
+        schema:
+          example: obada1yxxnd624tgwqm3eyv5smdvjrrydfh9h943qptg
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendCoinsRequest'
+      responses:
+        "201":
+          description: Coins were sent
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotAuthorized'
+          description: The request is not authorized.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+          description: Internal server error.
+      summary: Send coins from selected account
+      tags:
+      - Accounts
+  /accounts/new-account:
+    post:
+      operationId: newAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountRequest'
+      responses:
+        "201":
+          description: Account was created
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotAuthorized'
+          description: The request is not authorized.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+          description: Internal server error.
+      summary: Creates a new OBADA account from HD wallet master key
+      tags:
+      - Accounts
+  /accounts/new-wallet:
+    post:
+      operationId: newWallet
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MnemonicRequest'
+      responses:
+        "201":
+          description: HD wallet was created
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotAuthorized'
+          description: The request is not authorized.
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntity'
+          description: The submitted entity could not be processed.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+          description: Internal server error.
+      summary: Creates profile HD wallet
+      tags:
+      - Accounts
+  /accounts/mnemonic:
+    get:
+      operationId: getMnemonic
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewMnemonic'
+          description: New mnemonic phrase for wallet seeding
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotAuthorized'
+          description: The request is not authorized.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+          description: Internal server error.
+      summary: Fetching an existing mnemonic phrase
+      tags:
+      - Accounts
+  /accounts/new-mnemonic:
+    get:
+      operationId: newMnemonic
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewMnemonic'
+          description: New mnemonic phrase for wallet seeding
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotAuthorized'
+          description: The request is not authorized.
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntity'
+          description: The submitted entity could not be processed.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+          description: Internal server error.
+      summary: Generate a new mnemonic phrase for seeding wallet
+      tags:
+      - Accounts
   /accounts/my-balance:
     get:
       operationId: balance
@@ -52,21 +279,15 @@ paths:
       tags:
       - Accounts
   /accounts:
-    post:
-      description: "Creates a new account, using JWT uid as a internal user id"
-      operationId: createAccount
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/NewAccountRequest'
+    get:
+      operationId: accounts
       responses:
-        "201":
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Account'
-          description: Create new Account response
+                $ref: '#/components/schemas/Accounts'
+          description: Returns all OBADA accounts associated with client-helper profile
         "401":
           content:
             application/json:
@@ -85,7 +306,163 @@ paths:
               schema:
                 $ref: '#/components/schemas/InternalServerError'
           description: Internal server error.
-      summary: Creates a new Account
+      summary: Returns a list of OBADA accounts
+      tags:
+      - Accounts
+  /accounts/export-account:
+    post:
+      operationId: exportAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExportAccountRequest'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExportAccountResponse'
+          description: Single OBADA account (private key) encrypted with password
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotAuthorized'
+          description: The request is not authorized.
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletExistsError'
+          description: ""
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntity'
+          description: The submitted entity could not be processed.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+          description: Internal server error.
+      summary: Export OBADA account (private key) from client-helper
+      tags:
+      - Accounts
+  /accounts/import-account:
+    post:
+      operationId: importAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImportAccountRequest'
+      responses:
+        "201":
+          description: Account was imported
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotAuthorized'
+          description: The request is not authorized.
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletExistsError'
+          description: ""
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntity'
+          description: The submitted entity could not be processed.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+          description: Internal server error.
+      summary: Imports an existing OBADA account (private key) to the client-helper
+        user profile
+      tags:
+      - Accounts
+  /accounts/import-wallet:
+    post:
+      operationId: importWallet
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MnemonicRequest'
+      responses:
+        "201":
+          description: HD wallet was imported
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotAuthorized'
+          description: The request is not authorized.
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletExistsError'
+          description: ""
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntity'
+          description: The submitted entity could not be processed.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+          description: Internal server error.
+      summary: Imports an existing HD wallet to the client-helper user profile
+      tags:
+      - Accounts
+  /accounts/register:
+    post:
+      description: "Creates a new profile, using JWT uid as a internal user id"
+      operationId: register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'
+          description: Created profile response
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotAuthorized'
+          description: The request is not authorized.
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntity'
+          description: The submitted entity could not be processed.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+          description: Internal server error.
+      summary: Register a new client-helper user profile
       tags:
       - Accounts
   /obit/checksum:
@@ -422,18 +799,42 @@ paths:
       - NFT
 components:
   responses:
+    Account:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Account'
+      description: Returns OBADA account
+    ExportAccountResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ExportAccountResponse'
+      description: Single OBADA account (private key) encrypted with password
+    AccountsResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Accounts'
+      description: Returns all OBADA accounts associated with client-helper profile
+    NewMnemonic:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewMnemonic'
+      description: New mnemonic phrase for wallet seeding
     AccountBalance:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/AccountBalance'
       description: Account balance response
-    NewAccountResponse:
+    NewProfileResponse:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Account'
-      description: Create new Account response
+            $ref: '#/components/schemas/Profile'
+      description: Created profile response
     Obit:
       content:
         application/json:
@@ -476,6 +877,12 @@ components:
           schema:
             $ref: '#/components/schemas/NotAuthorized'
       description: The request is not authorized.
+    WalletExistsError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WalletExistsError'
+      description: ""
     UnprocessableEntity:
       content:
         application/json:
@@ -483,13 +890,94 @@ components:
             $ref: '#/components/schemas/UnprocessableEntity'
       description: The submitted entity could not be processed.
   schemas:
-    NewAccountRequest:
-      description: New account create payload
+    SendCoinsRequest:
+      description: Sending tokens payload
+      example:
+        amount: amount
+        denom: denom
+        recepient_address: recepient_address
+      properties:
+        recepient_address:
+          type: string
+        amount:
+          type: string
+        denom:
+          type: string
+      required:
+      - amount
+      - denom
+      - recepient_address
+      type: object
+    ExportAccountRequest:
+      description: OBADA account export payload
+      example:
+        address: address
+        passphrase: passphrase
+      properties:
+        address:
+          description: OBADA account
+          type: string
+        passphrase:
+          description: Passphrase to decrypt the account
+          type: string
+      required:
+      - private_key
+      type: object
+    AccountRequest:
+      description: Set account specific data
+      example:
+        account_name: My test account
+      properties:
+        account_name:
+          description: Associative account name
+          example: My test account
+          type: string
+      type: object
+    ImportAccountRequest:
+      description: OBADA account import payload
+      example:
+        account_name: My test account
+        private_key: private_key
+      properties:
+        private_key:
+          description: OBADA account
+          type: string
+        account_name:
+          description: Associative account name
+          example: My test account
+          type: string
+      required:
+      - private_key
+      type: object
+    MnemonicRequest:
+      description: Mnemonic for seeding the wallet response
+      example:
+        mnemonic: fantasy route flavor zoo laptop rent knife stick fancy flame black
+          fan oval stairs express identify crane truly anxiety wave notable gather
+          toe tag
+        force: false
+      properties:
+        mnemonic:
+          description: Mnemonic for seeding
+          example: fantasy route flavor zoo laptop rent knife stick fancy flame black
+            fan oval stairs express identify crane truly anxiety wave notable gather
+            toe tag
+          type: string
+        force:
+          default: false
+          description: "Flag that specify if exisiting wallet should be replaced,\
+            \ if false is send then error will be send back"
+          type: boolean
+      required:
+      - mnemonic
+      type: object
+    RegisterRequest:
+      description: Register profile payload
       example:
         email: john.doe@obada.io
       properties:
         email:
-          description: "Account owner email, will be used for verification purpose"
+          description: "Profile owner email, will be used for verification purpose"
           example: john.doe@obada.io
           type: string
       required:
@@ -713,6 +1201,7 @@ components:
     SaveObitRequest:
       description: Request to save Obit
       example:
+        address: address
         documents:
         - name: Link to device wipe report
           document_file: document_file
@@ -742,6 +1231,8 @@ components:
           items:
             $ref: '#/components/schemas/DeviceDocument'
           type: array
+        address:
+          type: string
       required:
       - manufacturer
       - part_number
@@ -788,15 +1279,29 @@ components:
       required:
       - receiver
       type: object
-    AccountBalance:
-      description: OBADA Account balance
+    Account:
+      description: OBADA account
       example:
         address: address
         balance: 0
+        name: My test account
+        nft_count: 6
+        pub_key: pub_key
       properties:
+        name:
+          description: Account address associated name
+          example: My test account
+          type: string
+        pub_key:
+          description: Public key
+          type: string
         address:
+          description: OBADA address
           type: string
         balance:
+          format: int64
+          type: integer
+        nft_count:
           format: int64
           type: integer
       type: object
@@ -805,6 +1310,13 @@ components:
       properties:
         error:
           default: Not authorized
+          type: string
+      type: object
+    InternalServerError:
+      description: A typical 500 error.
+      properties:
+        error:
+          default: Internal Server Error
           type: string
       type: object
     UnprocessableEntity:
@@ -818,24 +1330,102 @@ components:
             $ref: '#/components/schemas/UnprocessableEntity_fields_inner'
           type: array
       type: object
-    InternalServerError:
-      description: A typical 500 error.
+    NewMnemonic:
+      description: Mnemonic for seeding the wallet response
+      example:
+        mnemonic: fantasy route flavor zoo laptop rent knife stick fancy flame black
+          fan oval stairs express identify crane truly anxiety wave notable gather
+          toe tag
+        force: false
       properties:
-        error:
-          default: Internal Server Error
+        mnemonic:
+          description: Mnemonic for seeding
+          example: fantasy route flavor zoo laptop rent knife stick fancy flame black
+            fan oval stairs express identify crane truly anxiety wave notable gather
+            toe tag
+          type: string
+        force:
+          default: false
+          description: "Flag that specify if exisiting wallet should be replaced,\
+            \ if false is send then error will be send back"
+          type: boolean
+      required:
+      - mnemonic
+      type: object
+    AccountBalance:
+      description: OBADA Account balance
+      example:
+        address: address
+        balance: 0
+      properties:
+        address:
+          type: string
+        balance:
+          format: int64
+          type: integer
+      type: object
+    Accounts:
+      example:
+        hd_accounts:
+        - address: address
+          balance: 0
+          name: My test account
+          nft_count: 6
+          pub_key: pub_key
+        - address: address
+          balance: 0
+          name: My test account
+          nft_count: 6
+          pub_key: pub_key
+        imported_accounts:
+        - address: address
+          balance: 0
+          name: My test account
+          nft_count: 6
+          pub_key: pub_key
+        - address: address
+          balance: 0
+          name: My test account
+          nft_count: 6
+          pub_key: pub_key
+      properties:
+        hd_accounts:
+          items:
+            $ref: '#/components/schemas/Account'
+          type: array
+        imported_accounts:
+          items:
+            $ref: '#/components/schemas/Account'
+          type: array
+      type: object
+    ExportAccountResponse:
+      description: OBADA account export response
+      example:
+        private_key: private_key
+      properties:
+        private_key:
+          description: OBADA account
           type: string
       type: object
-    Account:
-      description: ClientHelper account
+    WalletExistsError:
+      description: Returns when trying to create or import HD wallet into setteld
+        user profile.
+      properties:
+        error:
+          default: profile wallet already exist
+          type: string
+      type: object
+    Profile:
+      description: ClientHelper user profile
       example:
         id: id
         email: john.doe@obada.io
       properties:
         id:
-          description: Account owner id
+          description: Profile owner id
           type: string
         email:
-          description: "Account owner email, will be used for verification purpose"
+          description: "Profile owner email, will be used for verification purpose"
           example: john.doe@obada.io
           type: string
       required:

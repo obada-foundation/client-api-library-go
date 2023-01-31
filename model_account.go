@@ -15,21 +15,24 @@ import (
 	"encoding/json"
 )
 
-// Account ClientHelper account
+// Account OBADA account
 type Account struct {
-	// Account owner id
-	Id *string `json:"id,omitempty"`
-	// Account owner email, will be used for verification purpose
-	Email string `json:"email"`
+	// Account address associated name
+	Name *string `json:"name,omitempty"`
+	// Public key
+	PubKey *string `json:"pub_key,omitempty"`
+	// OBADA address
+	Address *string `json:"address,omitempty"`
+	Balance *int64 `json:"balance,omitempty"`
+	NftCount *int64 `json:"nft_count,omitempty"`
 }
 
 // NewAccount instantiates a new Account object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAccount(email string) *Account {
+func NewAccount() *Account {
 	this := Account{}
-	this.Email = email
 	return &this
 }
 
@@ -41,69 +44,182 @@ func NewAccountWithDefaults() *Account {
 	return &this
 }
 
-// GetId returns the Id field value if set, zero value otherwise.
-func (o *Account) GetId() string {
-	if o == nil || o.Id == nil {
+// GetName returns the Name field value if set, zero value otherwise.
+func (o *Account) GetName() string {
+	if o == nil || o.Name == nil {
 		var ret string
 		return ret
 	}
-	return *o.Id
+	return *o.Name
 }
 
-// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Account) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+func (o *Account) GetNameOk() (*string, bool) {
+	if o == nil || o.Name == nil {
 		return nil, false
 	}
-	return o.Id, true
+	return o.Name, true
 }
 
-// HasId returns a boolean if a field has been set.
-func (o *Account) HasId() bool {
-	if o != nil && o.Id != nil {
+// HasName returns a boolean if a field has been set.
+func (o *Account) HasName() bool {
+	if o != nil && o.Name != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetId gets a reference to the given string and assigns it to the Id field.
-func (o *Account) SetId(v string) {
-	o.Id = &v
+// SetName gets a reference to the given string and assigns it to the Name field.
+func (o *Account) SetName(v string) {
+	o.Name = &v
 }
 
-// GetEmail returns the Email field value
-func (o *Account) GetEmail() string {
-	if o == nil {
+// GetPubKey returns the PubKey field value if set, zero value otherwise.
+func (o *Account) GetPubKey() string {
+	if o == nil || o.PubKey == nil {
 		var ret string
 		return ret
 	}
-
-	return o.Email
+	return *o.PubKey
 }
 
-// GetEmailOk returns a tuple with the Email field value
+// GetPubKeyOk returns a tuple with the PubKey field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Account) GetEmailOk() (*string, bool) {
-	if o == nil {
+func (o *Account) GetPubKeyOk() (*string, bool) {
+	if o == nil || o.PubKey == nil {
 		return nil, false
 	}
-	return &o.Email, true
+	return o.PubKey, true
 }
 
-// SetEmail sets field value
-func (o *Account) SetEmail(v string) {
-	o.Email = v
+// HasPubKey returns a boolean if a field has been set.
+func (o *Account) HasPubKey() bool {
+	if o != nil && o.PubKey != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetPubKey gets a reference to the given string and assigns it to the PubKey field.
+func (o *Account) SetPubKey(v string) {
+	o.PubKey = &v
+}
+
+// GetAddress returns the Address field value if set, zero value otherwise.
+func (o *Account) GetAddress() string {
+	if o == nil || o.Address == nil {
+		var ret string
+		return ret
+	}
+	return *o.Address
+}
+
+// GetAddressOk returns a tuple with the Address field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Account) GetAddressOk() (*string, bool) {
+	if o == nil || o.Address == nil {
+		return nil, false
+	}
+	return o.Address, true
+}
+
+// HasAddress returns a boolean if a field has been set.
+func (o *Account) HasAddress() bool {
+	if o != nil && o.Address != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetAddress gets a reference to the given string and assigns it to the Address field.
+func (o *Account) SetAddress(v string) {
+	o.Address = &v
+}
+
+// GetBalance returns the Balance field value if set, zero value otherwise.
+func (o *Account) GetBalance() int64 {
+	if o == nil || o.Balance == nil {
+		var ret int64
+		return ret
+	}
+	return *o.Balance
+}
+
+// GetBalanceOk returns a tuple with the Balance field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Account) GetBalanceOk() (*int64, bool) {
+	if o == nil || o.Balance == nil {
+		return nil, false
+	}
+	return o.Balance, true
+}
+
+// HasBalance returns a boolean if a field has been set.
+func (o *Account) HasBalance() bool {
+	if o != nil && o.Balance != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetBalance gets a reference to the given int64 and assigns it to the Balance field.
+func (o *Account) SetBalance(v int64) {
+	o.Balance = &v
+}
+
+// GetNftCount returns the NftCount field value if set, zero value otherwise.
+func (o *Account) GetNftCount() int64 {
+	if o == nil || o.NftCount == nil {
+		var ret int64
+		return ret
+	}
+	return *o.NftCount
+}
+
+// GetNftCountOk returns a tuple with the NftCount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Account) GetNftCountOk() (*int64, bool) {
+	if o == nil || o.NftCount == nil {
+		return nil, false
+	}
+	return o.NftCount, true
+}
+
+// HasNftCount returns a boolean if a field has been set.
+func (o *Account) HasNftCount() bool {
+	if o != nil && o.NftCount != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetNftCount gets a reference to the given int64 and assigns it to the NftCount field.
+func (o *Account) SetNftCount(v int64) {
+	o.NftCount = &v
 }
 
 func (o Account) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
+	if o.Name != nil {
+		toSerialize["name"] = o.Name
 	}
-	if true {
-		toSerialize["email"] = o.Email
+	if o.PubKey != nil {
+		toSerialize["pub_key"] = o.PubKey
+	}
+	if o.Address != nil {
+		toSerialize["address"] = o.Address
+	}
+	if o.Balance != nil {
+		toSerialize["balance"] = o.Balance
+	}
+	if o.NftCount != nil {
+		toSerialize["nft_count"] = o.NftCount
 	}
 	return json.Marshal(toSerialize)
 }

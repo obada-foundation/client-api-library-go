@@ -4,14 +4,17 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **string** | Account owner id | [optional] 
-**Email** | **string** | Account owner email, will be used for verification purpose | 
+**Name** | Pointer to **string** | Account address associated name | [optional] 
+**PubKey** | Pointer to **string** | Public key | [optional] 
+**Address** | Pointer to **string** | OBADA address | [optional] 
+**Balance** | Pointer to **int64** |  | [optional] 
+**NftCount** | Pointer to **int64** |  | [optional] 
 
 ## Methods
 
 ### NewAccount
 
-`func NewAccount(email string, ) *Account`
+`func NewAccount() *Account`
 
 NewAccount instantiates a new Account object
 This constructor will assign default values to properties that have it defined,
@@ -26,50 +29,130 @@ NewAccountWithDefaults instantiates a new Account object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetId
+### GetName
 
-`func (o *Account) GetId() string`
+`func (o *Account) GetName() string`
 
-GetId returns the Id field if non-nil, zero value otherwise.
+GetName returns the Name field if non-nil, zero value otherwise.
 
-### GetIdOk
+### GetNameOk
 
-`func (o *Account) GetIdOk() (*string, bool)`
+`func (o *Account) GetNameOk() (*string, bool)`
 
-GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
+GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetId
+### SetName
 
-`func (o *Account) SetId(v string)`
+`func (o *Account) SetName(v string)`
 
-SetId sets Id field to given value.
+SetName sets Name field to given value.
 
-### HasId
+### HasName
 
-`func (o *Account) HasId() bool`
+`func (o *Account) HasName() bool`
 
-HasId returns a boolean if a field has been set.
+HasName returns a boolean if a field has been set.
 
-### GetEmail
+### GetPubKey
 
-`func (o *Account) GetEmail() string`
+`func (o *Account) GetPubKey() string`
 
-GetEmail returns the Email field if non-nil, zero value otherwise.
+GetPubKey returns the PubKey field if non-nil, zero value otherwise.
 
-### GetEmailOk
+### GetPubKeyOk
 
-`func (o *Account) GetEmailOk() (*string, bool)`
+`func (o *Account) GetPubKeyOk() (*string, bool)`
 
-GetEmailOk returns a tuple with the Email field if it's non-nil, zero value otherwise
+GetPubKeyOk returns a tuple with the PubKey field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetEmail
+### SetPubKey
 
-`func (o *Account) SetEmail(v string)`
+`func (o *Account) SetPubKey(v string)`
 
-SetEmail sets Email field to given value.
+SetPubKey sets PubKey field to given value.
 
+### HasPubKey
+
+`func (o *Account) HasPubKey() bool`
+
+HasPubKey returns a boolean if a field has been set.
+
+### GetAddress
+
+`func (o *Account) GetAddress() string`
+
+GetAddress returns the Address field if non-nil, zero value otherwise.
+
+### GetAddressOk
+
+`func (o *Account) GetAddressOk() (*string, bool)`
+
+GetAddressOk returns a tuple with the Address field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAddress
+
+`func (o *Account) SetAddress(v string)`
+
+SetAddress sets Address field to given value.
+
+### HasAddress
+
+`func (o *Account) HasAddress() bool`
+
+HasAddress returns a boolean if a field has been set.
+
+### GetBalance
+
+`func (o *Account) GetBalance() int64`
+
+GetBalance returns the Balance field if non-nil, zero value otherwise.
+
+### GetBalanceOk
+
+`func (o *Account) GetBalanceOk() (*int64, bool)`
+
+GetBalanceOk returns a tuple with the Balance field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBalance
+
+`func (o *Account) SetBalance(v int64)`
+
+SetBalance sets Balance field to given value.
+
+### HasBalance
+
+`func (o *Account) HasBalance() bool`
+
+HasBalance returns a boolean if a field has been set.
+
+### GetNftCount
+
+`func (o *Account) GetNftCount() int64`
+
+GetNftCount returns the NftCount field if non-nil, zero value otherwise.
+
+### GetNftCountOk
+
+`func (o *Account) GetNftCountOk() (*int64, bool)`
+
+GetNftCountOk returns a tuple with the NftCount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNftCount
+
+`func (o *Account) SetNftCount(v int64)`
+
+SetNftCount sets NftCount field to given value.
+
+### HasNftCount
+
+`func (o *Account) HasNftCount() bool`
+
+HasNftCount returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

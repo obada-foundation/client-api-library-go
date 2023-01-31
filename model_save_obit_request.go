@@ -24,6 +24,7 @@ type SaveObitRequest struct {
 	// Serial number hashed with sha256 hash function
 	SerialNumber string `json:"serial_number"`
 	Documents []DeviceDocument `json:"documents,omitempty"`
+	Address *string `json:"address,omitempty"`
 }
 
 // NewSaveObitRequest instantiates a new SaveObitRequest object
@@ -150,6 +151,38 @@ func (o *SaveObitRequest) SetDocuments(v []DeviceDocument) {
 	o.Documents = v
 }
 
+// GetAddress returns the Address field value if set, zero value otherwise.
+func (o *SaveObitRequest) GetAddress() string {
+	if o == nil || o.Address == nil {
+		var ret string
+		return ret
+	}
+	return *o.Address
+}
+
+// GetAddressOk returns a tuple with the Address field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SaveObitRequest) GetAddressOk() (*string, bool) {
+	if o == nil || o.Address == nil {
+		return nil, false
+	}
+	return o.Address, true
+}
+
+// HasAddress returns a boolean if a field has been set.
+func (o *SaveObitRequest) HasAddress() bool {
+	if o != nil && o.Address != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetAddress gets a reference to the given string and assigns it to the Address field.
+func (o *SaveObitRequest) SetAddress(v string) {
+	o.Address = &v
+}
+
 func (o SaveObitRequest) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if true {
@@ -163,6 +196,9 @@ func (o SaveObitRequest) MarshalJSON() ([]byte, error) {
 	}
 	if o.Documents != nil {
 		toSerialize["documents"] = o.Documents
+	}
+	if o.Address != nil {
+		toSerialize["address"] = o.Address
 	}
 	return json.Marshal(toSerialize)
 }

@@ -79,8 +79,19 @@ All URIs are relative to *http://obs.node.obada.io*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*AccountsApi* | [**Account**](docs/AccountsApi.md#account) | **Get** /accounts/{address} | Fetches an information about single account
+*AccountsApi* | [**Accounts**](docs/AccountsApi.md#accounts) | **Get** /accounts | Returns a list of OBADA accounts
 *AccountsApi* | [**Balance**](docs/AccountsApi.md#balance) | **Get** /accounts/my-balance | Shows account balance of OBADA address
-*AccountsApi* | [**CreateAccount**](docs/AccountsApi.md#createaccount) | **Post** /accounts | Creates a new Account
+*AccountsApi* | [**ExportAccount**](docs/AccountsApi.md#exportaccount) | **Post** /accounts/export-account | Export OBADA account (private key) from client-helper
+*AccountsApi* | [**GetMnemonic**](docs/AccountsApi.md#getmnemonic) | **Get** /accounts/mnemonic | Fetching an existing mnemonic phrase
+*AccountsApi* | [**ImportAccount**](docs/AccountsApi.md#importaccount) | **Post** /accounts/import-account | Imports an existing OBADA account (private key) to the client-helper user profile
+*AccountsApi* | [**ImportWallet**](docs/AccountsApi.md#importwallet) | **Post** /accounts/import-wallet | Imports an existing HD wallet to the client-helper user profile
+*AccountsApi* | [**NewAccount**](docs/AccountsApi.md#newaccount) | **Post** /accounts/new-account | Creates a new OBADA account from HD wallet master key
+*AccountsApi* | [**NewMnemonic**](docs/AccountsApi.md#newmnemonic) | **Get** /accounts/new-mnemonic | Generate a new mnemonic phrase for seeding wallet
+*AccountsApi* | [**NewWallet**](docs/AccountsApi.md#newwallet) | **Post** /accounts/new-wallet | Creates profile HD wallet
+*AccountsApi* | [**Register**](docs/AccountsApi.md#register) | **Post** /accounts/register | Register a new client-helper user profile
+*AccountsApi* | [**SendCoins**](docs/AccountsApi.md#sendcoins) | **Post** /accounts/{address}/send-coins | Send coins from selected account
+*AccountsApi* | [**UpdateAccount**](docs/AccountsApi.md#updateaccount) | **Post** /accounts/{address} | Sets account specific information
 *NFTApi* | [**Mint**](docs/NFTApi.md#mint) | **Post** /nft/{key}/mint | Mints NFT
 *NFTApi* | [**Nft**](docs/NFTApi.md#nft) | **Get** /nft/{key} | Fetch NFT from OBADA blockchain Node
 *NFTApi* | [**Send**](docs/NFTApi.md#send) | **Post** /nft/{key}/send | Send NFT to another address
@@ -97,28 +108,38 @@ Class | Method | HTTP request | Description
 
  - [Account](docs/Account.md)
  - [AccountBalance](docs/AccountBalance.md)
+ - [AccountRequest](docs/AccountRequest.md)
+ - [Accounts](docs/Accounts.md)
  - [DeviceDocument](docs/DeviceDocument.md)
  - [Document](docs/Document.md)
+ - [ExportAccountRequest](docs/ExportAccountRequest.md)
+ - [ExportAccountResponse](docs/ExportAccountResponse.md)
  - [GenerateObitChecksumRequest](docs/GenerateObitChecksumRequest.md)
  - [GenerateObitChecksumResponse](docs/GenerateObitChecksumResponse.md)
  - [GenerateObitDIDRequest](docs/GenerateObitDIDRequest.md)
  - [GenerateObitDIDResponse](docs/GenerateObitDIDResponse.md)
  - [History200Response](docs/History200Response.md)
+ - [ImportAccountRequest](docs/ImportAccountRequest.md)
  - [InternalServerError](docs/InternalServerError.md)
+ - [MnemonicRequest](docs/MnemonicRequest.md)
  - [NFT](docs/NFT.md)
  - [NFTData](docs/NFTData.md)
  - [NFTDocument](docs/NFTDocument.md)
- - [NewAccountRequest](docs/NewAccountRequest.md)
+ - [NewMnemonic](docs/NewMnemonic.md)
  - [NotAuthorized](docs/NotAuthorized.md)
  - [NotFound](docs/NotFound.md)
  - [Obit](docs/Obit.md)
  - [ObitHistory](docs/ObitHistory.md)
  - [Obits](docs/Obits.md)
  - [ObitsMeta](docs/ObitsMeta.md)
+ - [Profile](docs/Profile.md)
+ - [RegisterRequest](docs/RegisterRequest.md)
  - [SaveObitRequest](docs/SaveObitRequest.md)
+ - [SendCoinsRequest](docs/SendCoinsRequest.md)
  - [SendNFTRequest](docs/SendNFTRequest.md)
  - [UnprocessableEntity](docs/UnprocessableEntity.md)
  - [UnprocessableEntityFieldsInner](docs/UnprocessableEntityFieldsInner.md)
+ - [WalletExistsError](docs/WalletExistsError.md)
 
 
 ## Documentation For Authorization

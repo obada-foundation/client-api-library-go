@@ -15,32 +15,32 @@ import (
 	"encoding/json"
 )
 
-// NewAccountRequest New account create payload
-type NewAccountRequest struct {
-	// Account owner email, will be used for verification purpose
+// RegisterRequest Register profile payload
+type RegisterRequest struct {
+	// Profile owner email, will be used for verification purpose
 	Email string `json:"email"`
 }
 
-// NewNewAccountRequest instantiates a new NewAccountRequest object
+// NewRegisterRequest instantiates a new RegisterRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewNewAccountRequest(email string) *NewAccountRequest {
-	this := NewAccountRequest{}
+func NewRegisterRequest(email string) *RegisterRequest {
+	this := RegisterRequest{}
 	this.Email = email
 	return &this
 }
 
-// NewNewAccountRequestWithDefaults instantiates a new NewAccountRequest object
+// NewRegisterRequestWithDefaults instantiates a new RegisterRequest object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewNewAccountRequestWithDefaults() *NewAccountRequest {
-	this := NewAccountRequest{}
+func NewRegisterRequestWithDefaults() *RegisterRequest {
+	this := RegisterRequest{}
 	return &this
 }
 
 // GetEmail returns the Email field value
-func (o *NewAccountRequest) GetEmail() string {
+func (o *RegisterRequest) GetEmail() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -51,7 +51,7 @@ func (o *NewAccountRequest) GetEmail() string {
 
 // GetEmailOk returns a tuple with the Email field value
 // and a boolean to check if the value has been set.
-func (o *NewAccountRequest) GetEmailOk() (*string, bool) {
+func (o *RegisterRequest) GetEmailOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -59,11 +59,11 @@ func (o *NewAccountRequest) GetEmailOk() (*string, bool) {
 }
 
 // SetEmail sets field value
-func (o *NewAccountRequest) SetEmail(v string) {
+func (o *RegisterRequest) SetEmail(v string) {
 	o.Email = v
 }
 
-func (o NewAccountRequest) MarshalJSON() ([]byte, error) {
+func (o RegisterRequest) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if true {
 		toSerialize["email"] = o.Email
@@ -71,38 +71,38 @@ func (o NewAccountRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-type NullableNewAccountRequest struct {
-	value *NewAccountRequest
+type NullableRegisterRequest struct {
+	value *RegisterRequest
 	isSet bool
 }
 
-func (v NullableNewAccountRequest) Get() *NewAccountRequest {
+func (v NullableRegisterRequest) Get() *RegisterRequest {
 	return v.value
 }
 
-func (v *NullableNewAccountRequest) Set(val *NewAccountRequest) {
+func (v *NullableRegisterRequest) Set(val *RegisterRequest) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableNewAccountRequest) IsSet() bool {
+func (v NullableRegisterRequest) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableNewAccountRequest) Unset() {
+func (v *NullableRegisterRequest) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableNewAccountRequest(val *NewAccountRequest) *NullableNewAccountRequest {
-	return &NullableNewAccountRequest{value: val, isSet: true}
+func NewNullableRegisterRequest(val *RegisterRequest) *NullableRegisterRequest {
+	return &NullableRegisterRequest{value: val, isSet: true}
 }
 
-func (v NullableNewAccountRequest) MarshalJSON() ([]byte, error) {
+func (v NullableRegisterRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableNewAccountRequest) UnmarshalJSON(src []byte) error {
+func (v *NullableRegisterRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
