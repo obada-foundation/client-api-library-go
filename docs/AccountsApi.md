@@ -6,7 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**Account**](AccountsApi.md#Account) | **Get** /accounts/{address} | Fetches an information about single account
 [**Accounts**](AccountsApi.md#Accounts) | **Get** /accounts | Returns a list of OBADA accounts
-[**Balance**](AccountsApi.md#Balance) | **Get** /accounts/my-balance | Shows account balance of OBADA address
+[**DeleteImportedAccount**](AccountsApi.md#DeleteImportedAccount) | **Delete** /accounts/{address} | Delete imported account
 [**ExportAccount**](AccountsApi.md#ExportAccount) | **Post** /accounts/export-account | Export OBADA account (private key) from client-helper
 [**GetMnemonic**](AccountsApi.md#GetMnemonic) | **Get** /accounts/mnemonic | Fetching an existing mnemonic phrase
 [**ImportAccount**](AccountsApi.md#ImportAccount) | **Post** /accounts/import-account | Imports an existing OBADA account (private key) to the client-helper user profile
@@ -147,11 +147,11 @@ Other parameters are passed through a pointer to a apiAccountsRequest struct via
 [[Back to README]](../README.md)
 
 
-## Balance
+## DeleteImportedAccount
 
-> AccountBalance Balance(ctx).Execute()
+> DeleteImportedAccount(ctx, address).Execute()
 
-Shows account balance of OBADA address
+Delete imported account
 
 ### Example
 
@@ -166,31 +166,38 @@ import (
 )
 
 func main() {
+    address := "obada1yxxnd624tgwqm3eyv5smdvjrrydfh9h943qptg" // string | OBADA address
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.AccountsApi.Balance(context.Background()).Execute()
+    resp, r, err := apiClient.AccountsApi.DeleteImportedAccount(context.Background(), address).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `AccountsApi.Balance``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `AccountsApi.DeleteImportedAccount``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `Balance`: AccountBalance
-    fmt.Fprintf(os.Stdout, "Response from `AccountsApi.Balance`: %v\n", resp)
 }
 ```
 
 ### Path Parameters
 
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**address** | **string** | OBADA address | 
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiBalanceRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiDeleteImportedAccountRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
 
 
 ### Return type
 
-[**AccountBalance**](AccountBalance.md)
+ (empty response body)
 
 ### Authorization
 

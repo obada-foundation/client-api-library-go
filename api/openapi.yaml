@@ -22,6 +22,42 @@ tags:
 - name: Utils
 paths:
   /accounts/{address}:
+    delete:
+      operationId: deleteImportedAccount
+      parameters:
+      - description: OBADA address
+        explode: false
+        in: path
+        name: address
+        required: true
+        schema:
+          example: obada1yxxnd624tgwqm3eyv5smdvjrrydfh9h943qptg
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Account was deleted
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntity'
+          description: The submitted entity could not be processed.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotAuthorized'
+          description: The request is not authorized.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+          description: Internal server error.
+      summary: Delete imported account
+      tags:
+      - Accounts
     get:
       operationId: account
       parameters:
@@ -74,7 +110,7 @@ paths:
             schema:
               $ref: '#/components/schemas/AccountRequest'
       responses:
-        "201":
+        "204":
           description: Account was updated
         "422":
           content:
@@ -245,37 +281,6 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
           description: Internal server error.
       summary: Generate a new mnemonic phrase for seeding wallet
-      tags:
-      - Accounts
-  /accounts/my-balance:
-    get:
-      operationId: balance
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AccountBalance'
-          description: Account balance response
-        "401":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotAuthorized'
-          description: The request is not authorized.
-        "422":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnprocessableEntity'
-          description: The submitted entity could not be processed.
-        "500":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/InternalServerError'
-          description: Internal server error.
-      summary: Shows account balance of OBADA address
       tags:
       - Accounts
   /accounts:
@@ -1283,9 +1288,11 @@ components:
       description: OBADA account
       example:
         address: address
-        balance: 0
+        balance:
+          amount: amount
+          denom: denom
         name: My test account
-        nft_count: 6
+        nft_count: 0
         pub_key: pub_key
       properties:
         name:
@@ -1299,8 +1306,7 @@ components:
           description: OBADA address
           type: string
         balance:
-          format: int64
-          type: integer
+          $ref: '#/components/schemas/Account_balance'
         nft_count:
           format: int64
           type: integer
@@ -1352,41 +1358,37 @@ components:
       required:
       - mnemonic
       type: object
-    AccountBalance:
-      description: OBADA Account balance
-      example:
-        address: address
-        balance: 0
-      properties:
-        address:
-          type: string
-        balance:
-          format: int64
-          type: integer
-      type: object
     Accounts:
       example:
         hd_accounts:
         - address: address
-          balance: 0
+          balance:
+            amount: amount
+            denom: denom
           name: My test account
-          nft_count: 6
+          nft_count: 0
           pub_key: pub_key
         - address: address
-          balance: 0
+          balance:
+            amount: amount
+            denom: denom
           name: My test account
-          nft_count: 6
+          nft_count: 0
           pub_key: pub_key
         imported_accounts:
         - address: address
-          balance: 0
+          balance:
+            amount: amount
+            denom: denom
           name: My test account
-          nft_count: 6
+          nft_count: 0
           pub_key: pub_key
         - address: address
-          balance: 0
+          balance:
+            amount: amount
+            denom: denom
           name: My test account
-          nft_count: 6
+          nft_count: 0
           pub_key: pub_key
       properties:
         hd_accounts:
@@ -1501,6 +1503,14 @@ components:
           default: Not found
           type: string
       type: object
+    AccountBalance:
+      description: OBADA Account balance
+      properties:
+        address:
+          type: string
+        balance:
+          $ref: '#/components/schemas/Account_balance'
+      type: object
     DeviceDocument:
       description: Device Document
       example:
@@ -1598,6 +1608,17 @@ components:
           items:
             $ref: '#/components/schemas/NFTDocument'
           type: array
+      type: object
+    Account_balance:
+      example:
+        amount: amount
+        denom: denom
+      properties:
+        denom:
+          description: Denomination unit
+          type: string
+        amount:
+          type: string
       type: object
     UnprocessableEntity_fields_inner:
       properties:

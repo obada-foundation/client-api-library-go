@@ -15,10 +15,11 @@ import (
 	"encoding/json"
 )
 
-// AccountBalance OBADA Account balance
+// AccountBalance struct for AccountBalance
 type AccountBalance struct {
-	Address *string `json:"address,omitempty"`
-	Balance *int64 `json:"balance,omitempty"`
+	// Denomination unit
+	Denom *string `json:"denom,omitempty"`
+	Amount *string `json:"amount,omitempty"`
 }
 
 // NewAccountBalance instantiates a new AccountBalance object
@@ -38,77 +39,77 @@ func NewAccountBalanceWithDefaults() *AccountBalance {
 	return &this
 }
 
-// GetAddress returns the Address field value if set, zero value otherwise.
-func (o *AccountBalance) GetAddress() string {
-	if o == nil || o.Address == nil {
+// GetDenom returns the Denom field value if set, zero value otherwise.
+func (o *AccountBalance) GetDenom() string {
+	if o == nil || o.Denom == nil {
 		var ret string
 		return ret
 	}
-	return *o.Address
+	return *o.Denom
 }
 
-// GetAddressOk returns a tuple with the Address field value if set, nil otherwise
+// GetDenomOk returns a tuple with the Denom field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AccountBalance) GetAddressOk() (*string, bool) {
-	if o == nil || o.Address == nil {
+func (o *AccountBalance) GetDenomOk() (*string, bool) {
+	if o == nil || o.Denom == nil {
 		return nil, false
 	}
-	return o.Address, true
+	return o.Denom, true
 }
 
-// HasAddress returns a boolean if a field has been set.
-func (o *AccountBalance) HasAddress() bool {
-	if o != nil && o.Address != nil {
+// HasDenom returns a boolean if a field has been set.
+func (o *AccountBalance) HasDenom() bool {
+	if o != nil && o.Denom != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetAddress gets a reference to the given string and assigns it to the Address field.
-func (o *AccountBalance) SetAddress(v string) {
-	o.Address = &v
+// SetDenom gets a reference to the given string and assigns it to the Denom field.
+func (o *AccountBalance) SetDenom(v string) {
+	o.Denom = &v
 }
 
-// GetBalance returns the Balance field value if set, zero value otherwise.
-func (o *AccountBalance) GetBalance() int64 {
-	if o == nil || o.Balance == nil {
-		var ret int64
+// GetAmount returns the Amount field value if set, zero value otherwise.
+func (o *AccountBalance) GetAmount() string {
+	if o == nil || o.Amount == nil {
+		var ret string
 		return ret
 	}
-	return *o.Balance
+	return *o.Amount
 }
 
-// GetBalanceOk returns a tuple with the Balance field value if set, nil otherwise
+// GetAmountOk returns a tuple with the Amount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AccountBalance) GetBalanceOk() (*int64, bool) {
-	if o == nil || o.Balance == nil {
+func (o *AccountBalance) GetAmountOk() (*string, bool) {
+	if o == nil || o.Amount == nil {
 		return nil, false
 	}
-	return o.Balance, true
+	return o.Amount, true
 }
 
-// HasBalance returns a boolean if a field has been set.
-func (o *AccountBalance) HasBalance() bool {
-	if o != nil && o.Balance != nil {
+// HasAmount returns a boolean if a field has been set.
+func (o *AccountBalance) HasAmount() bool {
+	if o != nil && o.Amount != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetBalance gets a reference to the given int64 and assigns it to the Balance field.
-func (o *AccountBalance) SetBalance(v int64) {
-	o.Balance = &v
+// SetAmount gets a reference to the given string and assigns it to the Amount field.
+func (o *AccountBalance) SetAmount(v string) {
+	o.Amount = &v
 }
 
 func (o AccountBalance) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Address != nil {
-		toSerialize["address"] = o.Address
+	if o.Denom != nil {
+		toSerialize["denom"] = o.Denom
 	}
-	if o.Balance != nil {
-		toSerialize["balance"] = o.Balance
+	if o.Amount != nil {
+		toSerialize["amount"] = o.Amount
 	}
 	return json.Marshal(toSerialize)
 }

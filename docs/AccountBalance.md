@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Address** | Pointer to **string** |  | [optional] 
-**Balance** | Pointer to **int64** |  | [optional] 
+**Denom** | Pointer to **string** | Denomination unit | [optional] 
+**Amount** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -26,55 +26,55 @@ NewAccountBalanceWithDefaults instantiates a new AccountBalance object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetAddress
+### GetDenom
 
-`func (o *AccountBalance) GetAddress() string`
+`func (o *AccountBalance) GetDenom() string`
 
-GetAddress returns the Address field if non-nil, zero value otherwise.
+GetDenom returns the Denom field if non-nil, zero value otherwise.
 
-### GetAddressOk
+### GetDenomOk
 
-`func (o *AccountBalance) GetAddressOk() (*string, bool)`
+`func (o *AccountBalance) GetDenomOk() (*string, bool)`
 
-GetAddressOk returns a tuple with the Address field if it's non-nil, zero value otherwise
+GetDenomOk returns a tuple with the Denom field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetAddress
+### SetDenom
 
-`func (o *AccountBalance) SetAddress(v string)`
+`func (o *AccountBalance) SetDenom(v string)`
 
-SetAddress sets Address field to given value.
+SetDenom sets Denom field to given value.
 
-### HasAddress
+### HasDenom
 
-`func (o *AccountBalance) HasAddress() bool`
+`func (o *AccountBalance) HasDenom() bool`
 
-HasAddress returns a boolean if a field has been set.
+HasDenom returns a boolean if a field has been set.
 
-### GetBalance
+### GetAmount
 
-`func (o *AccountBalance) GetBalance() int64`
+`func (o *AccountBalance) GetAmount() string`
 
-GetBalance returns the Balance field if non-nil, zero value otherwise.
+GetAmount returns the Amount field if non-nil, zero value otherwise.
 
-### GetBalanceOk
+### GetAmountOk
 
-`func (o *AccountBalance) GetBalanceOk() (*int64, bool)`
+`func (o *AccountBalance) GetAmountOk() (*string, bool)`
 
-GetBalanceOk returns a tuple with the Balance field if it's non-nil, zero value otherwise
+GetAmountOk returns a tuple with the Amount field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetBalance
+### SetAmount
 
-`func (o *AccountBalance) SetBalance(v int64)`
+`func (o *AccountBalance) SetAmount(v string)`
 
-SetBalance sets Balance field to given value.
+SetAmount sets Amount field to given value.
 
-### HasBalance
+### HasAmount
 
-`func (o *AccountBalance) HasBalance() bool`
+`func (o *AccountBalance) HasAmount() bool`
 
-HasBalance returns a boolean if a field has been set.
+HasAmount returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

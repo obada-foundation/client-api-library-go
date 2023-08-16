@@ -23,7 +23,7 @@ type Account struct {
 	PubKey *string `json:"pub_key,omitempty"`
 	// OBADA address
 	Address *string `json:"address,omitempty"`
-	Balance *int64 `json:"balance,omitempty"`
+	Balance *AccountBalance `json:"balance,omitempty"`
 	NftCount *int64 `json:"nft_count,omitempty"`
 }
 
@@ -141,9 +141,9 @@ func (o *Account) SetAddress(v string) {
 }
 
 // GetBalance returns the Balance field value if set, zero value otherwise.
-func (o *Account) GetBalance() int64 {
+func (o *Account) GetBalance() AccountBalance {
 	if o == nil || o.Balance == nil {
-		var ret int64
+		var ret AccountBalance
 		return ret
 	}
 	return *o.Balance
@@ -151,7 +151,7 @@ func (o *Account) GetBalance() int64 {
 
 // GetBalanceOk returns a tuple with the Balance field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Account) GetBalanceOk() (*int64, bool) {
+func (o *Account) GetBalanceOk() (*AccountBalance, bool) {
 	if o == nil || o.Balance == nil {
 		return nil, false
 	}
@@ -167,8 +167,8 @@ func (o *Account) HasBalance() bool {
 	return false
 }
 
-// SetBalance gets a reference to the given int64 and assigns it to the Balance field.
-func (o *Account) SetBalance(v int64) {
+// SetBalance gets a reference to the given AccountBalance and assigns it to the Balance field.
+func (o *Account) SetBalance(v AccountBalance) {
 	o.Balance = &v
 }
 

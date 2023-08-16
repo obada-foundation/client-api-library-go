@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **Name** | Pointer to **string** | Account address associated name | [optional] 
 **PubKey** | Pointer to **string** | Public key | [optional] 
 **Address** | Pointer to **string** | OBADA address | [optional] 
-**Balance** | Pointer to **int64** |  | [optional] 
+**Balance** | Pointer to [**AccountBalance**](AccountBalance.md) |  | [optional] 
 **NftCount** | Pointer to **int64** |  | [optional] 
 
 ## Methods
@@ -106,20 +106,20 @@ HasAddress returns a boolean if a field has been set.
 
 ### GetBalance
 
-`func (o *Account) GetBalance() int64`
+`func (o *Account) GetBalance() AccountBalance`
 
 GetBalance returns the Balance field if non-nil, zero value otherwise.
 
 ### GetBalanceOk
 
-`func (o *Account) GetBalanceOk() (*int64, bool)`
+`func (o *Account) GetBalanceOk() (*AccountBalance, bool)`
 
 GetBalanceOk returns a tuple with the Balance field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetBalance
 
-`func (o *Account) SetBalance(v int64)`
+`func (o *Account) SetBalance(v AccountBalance)`
 
 SetBalance sets Balance field to given value.
 
